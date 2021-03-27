@@ -1,5 +1,6 @@
 from random import randint
 
+from .pop_state import *
 
 class State:
     def __init__(self, laws, last_election, cities):
@@ -7,6 +8,36 @@ class State:
         self.last_election = last_election
         self.cities = cities
         self.migration_chance = 2
+
+    def get_healthy_pops(self):
+        pops = []
+        for city in self.cities:
+            pops.extend(city.pops)
+        return len(list(filter(lambda pop: pop.state == PopState.healthy, pops)))
+
+    def get_dead_pops(self):
+        pops = []
+        for city in self.cities:
+            pops.extend(city.pops)
+        return len(list(filter(lambda pop: pop.state == PopState.dead, pops)))
+
+    def get_ill_pops(self):
+        pops = []
+        for city in self.cities:
+            pops.extend(city.pops)
+        return len(list(filter(lambda pop: pop.state == PopState.ill, pops)))
+
+    def get_vaccinated_pops(self):
+        pops = []
+        for city in self.cities:
+            pops.extend(city.pops)
+        return len(list(filter(lambda pop: pop.state == PopState.vaccinated, pops)))
+
+    def get_recovered_pops(self):
+        pops = []
+        for city in self.cities:
+            pops.extend(city.pops)
+        return len(list(filter(lambda pop: pop.state == PopState.recovered, pops)))
 
     def introduce_law(self, law):
         if law.exlusive_with:

@@ -9,6 +9,21 @@ class City:
         self.location = location
         self.laws = laws
 
+    def get_healthy_pops(self):
+        return len(list(filter(lambda pop: pop.state == PopState.healthy, self.pops)))
+
+    def get_dead_pops(self):
+        return len(list(filter(lambda pop: pop.state == PopState.dead, self.pops)))
+
+    def get_ill_pops(self):
+        return len(list(filter(lambda pop: pop.state == PopState.ill, self.pops)))
+
+    def get_vaccinated_pops(self):
+        return len(list(filter(lambda pop: pop.state == PopState.vaccinated, self.pops)))
+
+    def get_recovered_pops(self):
+        return len(list(filter(lambda pop: pop.state == PopState.recovered, self.pops)))
+
     def introduce_law(self, law):
         self.laws.append(law)
         for pop in self.pops:
@@ -42,6 +57,8 @@ class City:
                 ill_number = ill_number + 1
 
         death_chance = 10
+        quarantine_chance = 20
+        recovered_chance = 30
 
         for pop in self.pops:
             if pop.state == PopState.dead:
@@ -49,14 +66,20 @@ class City:
             elif pop.state == PopState.ill:
                 if randint(0, 99) < death_chance:
                     pop.state = PopState.dead
+                elif randint(0, 99) < quarantine_chance:
+                    pop.quarantined = True
                 elif turn - pop.illness_date > 2:
                     pop.state = PopState.recovered
+                    pop.quarantined = False
             elif pop.state == PopState.healthy:
                 infection_chance = int(100 * ill_number / len(self.pops))
                 self.compute_infection_chance(self.laws, pop, infection_chance)
                 self.compute_infection_chance(state_laws, pop, infection_chance)
                 if randint(0, 99) < infection_chance:
                     pop.state = PopState.ill
+            elif pop.state == PopState.recovered:
+                if randint(0, 99) < recovered_chance:
+                    pop.state = PopState.healthy
 
     def compute_infection_chance(self, laws, pop, infection_chance):
         for law in laws:
