@@ -1,8 +1,9 @@
 
 class Pop:
-    def __init__(self, state, illness_date, mask_on, quarantined, age):
+    def __init__(self, state, illness_date, mask_on, quarantined, age, happiness):
         self.state = state
         self.illness_date = illness_date
         self.mask_on = mask_on
         self.quarantined = quarantined
         self.age = age
+        self.happiness = happiness

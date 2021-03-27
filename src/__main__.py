@@ -1,5 +1,6 @@
 import pygame
-from game import city, background
+from game import city
+from src.view import background, city_map_representation
 import menu
 import settings
 
@@ -26,8 +27,9 @@ class App:
         self._running = True
 
         for i in range(1, 16):
-            city_obj = city.City(i, None, RESOURCES_PATH + 'city.png', None, (626 / i, 626 / i))
-            self._display_surf.blit(city_obj.image, city_obj.rect)
+            city_obj = city.City(i, None, None, (626 / i, 626 / i))
+            city_representation = city_map_representation.CityMapRepresentation(RESOURCES_PATH + 'city.png', city_obj.location)
+            self._display_surf.blit(city_representation.image, city_representation.rect)
 
         pygame.display.flip()
 

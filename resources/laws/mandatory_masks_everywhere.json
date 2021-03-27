@@ -1,0 +1,12 @@
+{
+  "name": "Mandatory masks everywhere",
+  "scope": "state",
+  "infection_chance_modifiers":
+  [
+    {"all": -10}
+  ],
+  "happiness_modifiers":
+  [
+    {"all": -10}
+  ]
+}

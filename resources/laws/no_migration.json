@@ -1,9 +1,9 @@
 {
-  "name": "Mandatory hand washing",
-  "scope": "city",
+  "name": "No migration",
+  "scope": "state",
   "infection_chance_modifiers":
   [
-    {"wearing_mask": -7}
+    {"all": -7}
   ],
   "happiness_modifiers":
   [

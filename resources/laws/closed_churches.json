@@ -1,0 +1,13 @@
+{
+  "name": "Closed churches",
+  "scope": "state",
+  "infection_chance_modifiers":
+  [
+    {"all": -4}
+  ],
+  "happiness_modifiers":
+  [
+    {"old": -10},
+    {"young": -5}
+  ]
+}

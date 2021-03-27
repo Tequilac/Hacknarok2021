@@ -11,6 +11,12 @@ class Game:
         self.state_laws = laws[0]
         self.city_laws = laws[0]
 
+    def next_turn(self):
+        for city in self.state.cities:
+            city.compute_pops_changes(self.state.laws, self.turn)
+        self.state.compute_migrations()
+        self.turn = self.turn + 1
+
     def create_laws(self):
         state_laws = []
         city_laws = []

@@ -1,0 +1,13 @@
+{
+  "name": "Closed shops",
+  "scope": "state",
+  "infection_chance_modifiers":
+  [
+    {"all": -5}
+  ],
+  "happiness_modifiers":
+  [
+    {"young": -10},
+    {"old": -7}
+  ]
+}
