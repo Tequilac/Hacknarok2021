@@ -8,33 +8,34 @@ from settings import Colors
 class Menu:
     BUTTONS_INIT_HEIGHT = 200
     BUTTONS_DIST = 10
+    BUTTON_SIZE = (200, 100)
+    BUTTONS_NAMES = [
+        'START',
+        'QUIT',
+    ]
 
-    def __init__(self, width):
+    def __init__(self, width: int):
         self._running = True
         self.current_menu_option = 0
-
         self.width = width
-        self.buttons = pygame.sprite.Group()
+        self.buttons = []
 
-        button_names = [
-            'START',
-            'QUIT',
-        ]
+        # Initializing
+        self.initialize_buttons()
+
+    def initialize_buttons(self) -> None:
 
         height = self.BUTTONS_INIT_HEIGHT
-        for button_name in button_names:
-            button = MenuButton(button_name, Colors.WHITE.value, 200, 100, button_name)
+        for button_name in self.BUTTONS_NAMES:
+            button = MenuButton(button_name, Colors.WHITE.value, self.BUTTON_SIZE[0], self.BUTTON_SIZE[1], button_name)
             button.rect.center = (self.width // 2, height)
             height += self.BUTTONS_DIST + button.rect.height
-            self.buttons.add(button)
+            self.buttons.append(button)
 
-    def initialize(self, app_surface):
+    def initialize(self, app_surface: pygame.Surface) -> None:
         app_surface.fill(Colors.BLUE.value)
 
-    def on_render(self):
-        pygame.display.update()
-
-    def on_event(self, event):
+    def on_event(self, event : pygame.event.Event) -> None:
         if event.type == pygame.QUIT:
             sys.exit(0)
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -48,12 +49,12 @@ class Menu:
                     elif button.name == 'QUIT':
                         sys.exit(0)
 
-    def run(self, app_surface):
+    def run(self, app_surface: pygame.Surface) -> None:
         self.initialize(app_surface)
+        pygame.sprite.Group(self.buttons).draw(app_surface)
 
         while self._running:
-            self.buttons.draw(app_surface)
             for event in pygame.event.get():
                 self.on_event(event)
 
-            self.on_render()
+            pygame.display.update()

@@ -3,7 +3,7 @@ import settings
 
 
 class MenuButton(pygame.sprite.Sprite):
-    def __init__(self, text, color, width, height, name):
+    def __init__(self, text: str, color: settings.Colors, width: int, height: int, name: str):
         super().__init__()
         self.font = settings.MENU_FONT
         self.name = name

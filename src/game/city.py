@@ -1,30 +1,40 @@
 from random import randint
+from typing import List, Tuple
+from .pop import Pop
 from .pop_state import *
+from .law import Law
 
 
 class City:
-    def __init__(self, name, pops, laws, location):
+    DEATH_CHANCE = 10
+    QUARANTINE_CHANCE = 20
+    RECOVERED_CHANCE = 30
+    
+    def __init__(self, name: str, pops: List[Pop], location: Tuple[int], laws=None):
         self.name = name
         self.pops = pops
         self.location = location
-        self.laws = laws
+        self.laws = laws if laws else []
 
-    def get_healthy_pops(self):
-        return len(list(filter(lambda pop: pop.state == PopState.healthy, self.pops)))
+    def get_pops_num_by_state(self, pop_state: PopState):
+        return len([pop for pop in self.pops if pop.state == pop_state])
 
-    def get_dead_pops(self):
-        return len(list(filter(lambda pop: pop.state == PopState.dead, self.pops)))
+    def get_healthy_pops_num(self) -> int:
+        return self.get_pops_num_by_state(PopState.healthy)
 
-    def get_ill_pops(self):
-        return len(list(filter(lambda pop: pop.state == PopState.ill, self.pops)))
+    def get_dead_pops_num(self) -> int:
+        return self.get_pops_num_by_state(PopState.dead)
 
-    def get_vaccinated_pops(self):
-        return len(list(filter(lambda pop: pop.state == PopState.vaccinated, self.pops)))
+    def get_ill_pops_num(self) -> int:
+        return self.get_pops_num_by_state(PopState.ill)
 
-    def get_recovered_pops(self):
-        return len(list(filter(lambda pop: pop.state == PopState.recovered, self.pops)))
+    def get_vaccinated_pops_num(self) -> int:
+        return self.get_pops_num_by_state(PopState.vaccinated)
 
-    def introduce_law(self, law):
+    def get_recovered_pops_num(self) -> int:
+        return self.get_pops_num_by_state(PopState.recovered)
+
+    def introduce_law(self, law: Law) -> None:
         self.laws.append(law)
         for pop in self.pops:
             for modifier in law.happiness_modifiers:
@@ -39,7 +49,7 @@ class City:
                 elif 'old' in modifier and pop.age > 50:
                     pop.happiness = pop.happiness + modifier['old']
 
-    def revoke_law(self, law):
+    def revoke_law(self, law: Law) -> None:
         self.laws.remove(law)
         for pop in self.pops:
             for modifier in law.happiness_modifiers:
@@ -54,38 +64,38 @@ class City:
                 elif 'old' in modifier and pop.age > 50:
                     pop.happiness = pop.happiness - modifier['old']
 
-    def compute_pops_changes(self, state_laws, turn):
+    def compute_pops_changes(self, state_laws: List[Law], turn: int) -> None:
         ill_number = 0
         for pop in self.pops:
             if pop.state == PopState.ill:
-                ill_number = ill_number + 1
+                ill_number += 1
 
-        death_chance = 10
-        quarantine_chance = 20
-        recovered_chance = 30
+        def dice_roll() -> int:
+            return randint(0, 99)
 
         for pop in self.pops:
             if pop.state == PopState.dead:
                 self.pops.remove(pop)
             elif pop.state == PopState.ill:
-                if randint(0, 99) < death_chance:
+                if dice_roll() < self.DEATH_CHANCE:
                     pop.state = PopState.dead
-                elif randint(0, 99) < quarantine_chance:
+                elif dice_roll() < self.QUARANTINE_CHANCE:
                     pop.quarantined = True
                 elif turn - pop.illness_date > 2:
                     pop.state = PopState.recovered
                     pop.quarantined = False
             elif pop.state == PopState.healthy:
                 infection_chance = int(100 * ill_number / len(self.pops))
-                self.compute_infection_chance(self.laws, pop, infection_chance)
-                self.compute_infection_chance(state_laws, pop, infection_chance)
-                if randint(0, 99) < infection_chance:
+                infection_chance = City.compute_infection_chance(self.laws, pop, infection_chance)
+                infection_chance = City.compute_infection_chance(state_laws, pop, infection_chance)
+                if dice_roll() < infection_chance:
                     pop.state = PopState.ill
             elif pop.state == PopState.recovered:
-                if randint(0, 99) < recovered_chance:
+                if dice_roll() < self.RECOVERED_CHANCE:
                     pop.state = PopState.healthy
 
-    def compute_infection_chance(self, laws, pop, infection_chance):
+    @staticmethod
+    def compute_infection_chance(laws: List[Law], pop: Pop, infection_chance: int):
         for law in laws:
             for modifier in law.infection_chance_modifiers:
                 if 'all' in modifier:
@@ -98,3 +108,5 @@ class City:
                     infection_chance = infection_chance + modifier['young']
                 elif 'old' in modifier and pop.age > 50:
                     infection_chance = infection_chance + modifier['old']
+
+        return infection_chance

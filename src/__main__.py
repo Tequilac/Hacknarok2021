@@ -1,5 +1,4 @@
 import pygame
-from settings.initializator import Initializer
 import menu
 import settings
 
@@ -19,9 +18,9 @@ class App:
     def game_init(self):
         self._running = True
 
-        initializer = Initializer()
-        initializer.initialize_background(settings.RESOURCES_PATH + 'country_map.png', self._display_surf)
-        cities_list = initializer.initialize_cities(settings.RESOURCES_PATH + 'city.png', self._display_surf)
+        initializer = settings.Initializer()
+        initializer.initialize_background(settings.Paths.RESOURCES / 'country_map.png', self._display_surf)
+        cities_list = initializer.initialize_cities(settings.Paths.RESOURCES / 'city.png', self._display_surf)
 
         pygame.display.flip()
 

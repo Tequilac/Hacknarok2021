@@ -1,47 +1,41 @@
 from random import randint
-
+from functools import reduce
+from typing import List
+from .law import Law
+from .city import City
 from .pop_state import *
 
 
 class State:
-    def __init__(self, laws, last_election, cities):
+    INITIAL_MIGRATION_CHANCE = 2
+
+    def __init__(self, laws: List[Law], last_election: int, cities: List[City]):
         self.laws = laws
         self.last_election = last_election
         self.cities = cities
-        self.migration_chance = 2
+        self.migration_chance = self.INITIAL_MIGRATION_CHANCE
 
-    def get_healthy_pops(self):
-        pops = []
-        for city in self.cities:
-            pops.extend(city.pops)
-        return len(list(filter(lambda pop: pop.state == PopState.healthy, pops)))
+    def get_pops_num_by_state(self, pop_state: PopState) -> int:
+        all_pops = reduce(lambda x, y: x + y, [city.pops for city in self.cities])
+        return len([pop for pop in all_pops if pop.state == pop_state])
 
-    def get_dead_pops(self):
-        pops = []
-        for city in self.cities:
-            pops.extend(city.pops)
-        return len(list(filter(lambda pop: pop.state == PopState.dead, pops)))
+    def get_healthy_pops_num(self) -> int:
+        return self.get_pops_num_by_state(PopState.healthy)
 
-    def get_ill_pops(self):
-        pops = []
-        for city in self.cities:
-            pops.extend(city.pops)
-        return len(list(filter(lambda pop: pop.state == PopState.ill, pops)))
+    def get_dead_pops(self) -> int:
+        return self.get_pops_num_by_state(PopState.dead)
 
-    def get_vaccinated_pops(self):
-        pops = []
-        for city in self.cities:
-            pops.extend(city.pops)
-        return len(list(filter(lambda pop: pop.state == PopState.vaccinated, pops)))
+    def get_ill_pops(self) -> int:
+        return self.get_pops_num_by_state(PopState.ill)
 
-    def get_recovered_pops(self):
-        pops = []
-        for city in self.cities:
-            pops.extend(city.pops)
-        return len(list(filter(lambda pop: pop.state == PopState.recovered, pops)))
+    def get_vaccinated_pops(self) -> int:
+        return self.get_pops_num_by_state(PopState.vaccinated)
 
-    def introduce_law(self, law):
-        if law.exlusive_with:
+    def get_recovered_pops(self) -> int:
+        return self.get_pops_num_by_state(PopState.recovered)
+
+    def introduce_law(self, law: Law):
+        if law.exclusive_with:
             for current_law in self.laws:
                 if law.exclusive_with == current_law.name:
                     self.revoke_law(current_law)
@@ -64,7 +58,7 @@ class State:
                     elif 'old' in modifier and pop.age > 50:
                         pop.happiness = pop.happiness + modifier['old']
 
-    def revoke_law(self, law):
+    def revoke_law(self, law: Law):
         if law.name == 'No migration' or law.name == 'Limited migration':
             self.migration_chance = 2
         self.laws.remove(law)

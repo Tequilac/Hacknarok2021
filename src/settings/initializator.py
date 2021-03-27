@@ -1,19 +1,25 @@
-import view
 import settings
-from game import city
-from resources import cities_parser
+import parsers
+import pygame
+import view
+
+from pathlib import Path
 
 
 class Initializer:
-    def initialize_background(self, file_name, display_surf):
-        back_ground = view.background.Background(file_name, (0, 0))
-        display_surf.fill(settings.colors.Colors.WHITE.value)
-        display_surf.blit(back_ground.image, back_ground.rect)
+    LEFT_UPPER_CORNER = (0, 0)
 
-    def initialize_cities(self, file_name, display_surf):
+    @staticmethod
+    def initialize_background(filepath: Path, surface: pygame.Surface):
+        back_ground = view.Background(filepath, Initializer.LEFT_UPPER_CORNER)
+        surface.fill(settings.colors.Colors.WHITE.value)
+        surface.blit(back_ground.image, back_ground.rect)
+
+    @staticmethod
+    def initialize_cities(filepath: Path, surface: pygame.Surface):
+        cities_parser = parsers.CitiesParser(settings.Paths.RESOURCES / 'cities.json')
+
         cities_list = cities_parser.load_cities()
-        for city_name, city_cord, pops_num in cities_list:
-            city_obj = city.City(city_name, None, None, city_cord)
-            city_representation = view.city_map_representation.CityMapRepresentation(file_name,
-                                                                                city_obj.name, city_obj.location)
-            display_surf.blit(city_representation.image, city_representation.rect)
+        for city in cities_list:
+            city_representation = view.CityMapRepresentation(filepath, city.name, city.location)
+            surface.blit(city_representation.image, city_representation.rect)
