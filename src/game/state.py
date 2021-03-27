@@ -6,8 +6,17 @@ class State:
         self.laws = laws
         self.last_election = last_election
         self.cities = cities
+        self.migration_chance = 2
 
     def introduce_law(self, law):
+        if law.exlusive_with:
+            for current_law in self.laws:
+                if law.exclusive_with == current_law.name:
+                    self.revoke_law(current_law)
+        if law.name == 'No migration':
+            self.migration_chance = 0
+        elif law.name == 'Limited migration':
+            self.migration_chance = 1
         self.laws.append(law)
         for city in self.cities:
             for pop in city:
@@ -22,6 +31,8 @@ class State:
                         pop.happiness = pop.happiness + modifier['old']
 
     def revoke_law(self, law):
+        if law.name == 'No migration' or law.name == 'Limited migration':
+            self.migration_chance = 2
         self.laws.remove(law)
         for city in self.cities:
             for pop in city:
@@ -36,10 +47,9 @@ class State:
                         pop.happiness = pop.happiness - modifier['old']
 
     def compute_migrations(self):
-        migration_chance = 2
         for i in range(len(self.cities)):
             for pop in self.cities[i].pops:
-                if randint(0, 99) < migration_chance:
+                if randint(0, 99) < self.migration_chance:
                     self.cities[i].pops.remove(pop)
                     chosen_city = randint(1, len(self.cities) - 1)
                     self.cities[(i + chosen_city) % len(self.cities)].append(pop)

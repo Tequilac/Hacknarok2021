@@ -8,5 +8,9 @@
   "happiness_modifiers":
   [
     {"all": -5}
+  ],
+  "exclusive_with":
+  [
+    "Limited migration"
   ]
 }
