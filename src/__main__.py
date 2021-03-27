@@ -3,6 +3,7 @@ from game import city
 from src.view import background, city_map_representation, cities_parser
 import menu
 import settings
+from game import Game
 
 RESOURCES_PATH = '../resources/'
 
@@ -24,6 +25,8 @@ class App:
         self._display_surf.fill(settings.colors.Colors.WHITE.value)
         self._display_surf.blit(self.back_ground.image, self.back_ground.rect)
         self._running = True
+
+        game = Game(0, 0)
 
         citiesList = cities_parser.load_cities()
         for city_name, city_cord in citiesList:

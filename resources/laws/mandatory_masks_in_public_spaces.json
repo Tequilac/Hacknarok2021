@@ -3,7 +3,7 @@
   "scope": "state",
   "infection_chance_modifiers":
   [
-    {"all": -7}
+    {"not_wearing_masks": -7}
   ],
   "happiness_modifiers":
   [
