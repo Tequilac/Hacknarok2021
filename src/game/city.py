@@ -32,6 +32,8 @@ class City:
                     pop.happiness = pop.happiness + modifier['all']
                 elif 'wearing_mask' in modifier and pop.mask_on:
                     pop.happiness = pop.happiness + modifier['wearing_mask']
+                elif 'not_wearing_mask' in modifier and not pop.mask_on:
+                    pop.happiness = pop.happiness - modifier['not_wearing_mask']
                 elif 'young' in modifier and pop.age < 40:
                     pop.happiness = pop.happiness + modifier['young']
                 elif 'old' in modifier and pop.age > 50:
@@ -45,6 +47,8 @@ class City:
                     pop.happiness = pop.happiness - modifier['all']
                 elif 'wearing_mask' in modifier and pop.mask_on:
                     pop.happiness = pop.happiness - modifier['wearing_mask']
+                elif 'not_wearing_mask' in modifier and not pop.mask_on:
+                    pop.happiness = pop.happiness - modifier['not_wearing_mask']
                 elif 'young' in modifier and pop.age < 40:
                     pop.happiness = pop.happiness - modifier['young']
                 elif 'old' in modifier and pop.age > 50:
@@ -88,6 +92,8 @@ class City:
                     infection_chance = infection_chance + modifier['all']
                 elif 'wearing_mask' in modifier and pop.mask_on:
                     infection_chance = infection_chance + modifier['wearing_mask']
+                elif 'not_wearing_mask' in modifier and not pop.mask_on:
+                    infection_chance = infection_chance + modifier['not_wearing_mask']
                 elif 'young' in modifier and pop.age < 40:
                     infection_chance = infection_chance + modifier['young']
                 elif 'old' in modifier and pop.age > 50:

@@ -1,0 +1,12 @@
+{
+  "name": "Mandatory social distancing",
+  "scope": "city",
+  "infection_chance_modifiers":
+  [
+    {"not_wearing_mask": -7}
+  ],
+  "happiness_modifiers":
+  [
+    {"all": -3}
+  ]
+}

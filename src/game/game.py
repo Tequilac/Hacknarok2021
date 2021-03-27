@@ -1,6 +1,7 @@
 import os
 from .laws_parser import *
 from .law_scope import *
+from .law import *
 
 
 class Game:
@@ -9,7 +10,7 @@ class Game:
         self.state = state
         laws = self.create_laws()
         self.state_laws = laws[0]
-        self.city_laws = laws[0]
+        self.city_laws = laws[1]
 
     def next_turn(self):
         for city in self.state.cities:
