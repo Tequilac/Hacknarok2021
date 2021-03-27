@@ -13,7 +13,9 @@ class Game:
         self.city_laws = laws[1]
 
     def next_turn(self):
+        self.state.save_turn_data()
         for city in self.state.cities:
+            city.save_turn_data()
             city.compute_pops_changes(self.state.laws, self.turn)
         self.state.compute_migrations()
         self.turn = self.turn + 1

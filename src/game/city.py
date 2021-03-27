@@ -8,6 +8,7 @@ class City:
         self.pops = pops
         self.location = location
         self.laws = laws
+        self.previous_turn_data = {}
 
     def get_healthy_pops(self):
         return len(list(filter(lambda pop: pop.state == PopState.healthy, self.pops)))
@@ -23,6 +24,13 @@ class City:
 
     def get_recovered_pops(self):
         return len(list(filter(lambda pop: pop.state == PopState.recovered, self.pops)))
+
+    def save_turn_data(self):
+        self.previous_turn_data['healthy'] = self.get_healthy_pops()
+        self.previous_turn_data['dead'] = self.get_dead_pops()
+        self.previous_turn_data['ill'] = self.get_ill_pops()
+        self.previous_turn_data['vaccinated'] = self.get_vaccinated_pops()
+        self.previous_turn_data['recovered'] = self.get_recovered_pops()
 
     def introduce_law(self, law):
         self.laws.append(law)

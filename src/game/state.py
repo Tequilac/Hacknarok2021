@@ -9,6 +9,7 @@ class State:
         self.last_election = last_election
         self.cities = cities
         self.migration_chance = 2
+        self.previous_turn_data = {}
 
     def get_healthy_pops(self):
         pops = []
@@ -39,6 +40,13 @@ class State:
         for city in self.cities:
             pops.extend(city.pops)
         return len(list(filter(lambda pop: pop.state == PopState.recovered, pops)))
+
+    def save_turn_data(self):
+        self.previous_turn_data['healthy'] = self.get_healthy_pops()
+        self.previous_turn_data['dead'] = self.get_dead_pops()
+        self.previous_turn_data['ill'] = self.get_ill_pops()
+        self.previous_turn_data['vaccinated'] = self.get_vaccinated_pops()
+        self.previous_turn_data['recovered'] = self.get_recovered_pops()
 
     def introduce_law(self, law):
         if law.exlusive_with:
