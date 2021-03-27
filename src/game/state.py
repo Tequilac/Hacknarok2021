@@ -61,16 +61,7 @@ class State:
         for city in self.cities:
             for pop in city:
                 for modifier in law.happiness_modifiers:
-                    if 'all' in modifier:
-                        pop.happiness = pop.happiness + modifier['all']
-                    elif 'wearing_mask' in modifier and pop.mask_on:
-                        pop.happiness = pop.happiness + modifier['wearing_mask']
-                    elif 'not_wearing_mask' in modifier and not pop.mask_on:
-                        pop.happiness = pop.happiness + modifier['not_wearing_mask']
-                    elif 'young' in modifier and pop.age < 40:
-                        pop.happiness = pop.happiness + modifier['young']
-                    elif 'old' in modifier and pop.age > 50:
-                        pop.happiness = pop.happiness + modifier['old']
+                    pop.apply_modifier(modifier)
 
     def revoke_law(self, law):
         if law.name == 'No migration' or law.name == 'Limited migration':
@@ -79,16 +70,7 @@ class State:
         for city in self.cities:
             for pop in city:
                 for modifier in law.happiness_modifiers:
-                    if 'all' in modifier:
-                        pop.happiness = pop.happiness - modifier['all']
-                    elif 'wearing_mask' in modifier and pop.mask_on:
-                        pop.happiness = pop.happiness - modifier['wearing_mask']
-                    elif 'not_wearing_mask' in modifier and not pop.mask_on:
-                        pop.happiness = pop.happiness - modifier['not_wearing_mask']
-                    elif 'young' in modifier and pop.age < 40:
-                        pop.happiness = pop.happiness - modifier['young']
-                    elif 'old' in modifier and pop.age > 50:
-                        pop.happiness = pop.happiness - modifier['old']
+                    pop.remove_modifier(modifier)
 
     def compute_migrations(self):
         for i in range(len(self.cities)):

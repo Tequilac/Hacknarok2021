@@ -8,5 +8,10 @@
   "happiness_modifiers":
   [
     {"all": -10}
+  ],
+  "wearing_mask": 80,
+  "exclusive_with":
+  [
+    "Mandatory masks in public spaces"
   ]
 }

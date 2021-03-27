@@ -8,5 +8,10 @@
   "happiness_modifiers":
   [
     {"all": -7}
+  ],
+  "wearing_mask": 50,
+  "exclusive_with":
+  [
+    "Mandatory masks everywhere"
   ]
 }
