@@ -1,0 +1,13 @@
+{
+  "name": "Closed pools",
+  "scope": "state",
+  "infection_chance_modifiers":
+  [
+    {"young": -5},
+    {"old": -2}
+  ],
+  "happiness_modifiers":
+  [
+    {"all": -3}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Ban on public gatherings",
+  "scope": "state",
+  "infection_chance_modifiers":
+  [
+    {"all": -5}
+  ],
+  "happiness_modifiers":
+  [
+    {"all": -5}
+  ]
+}

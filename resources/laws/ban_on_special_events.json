@@ -1,0 +1,13 @@
+{
+  "name": "Ban on special events",
+  "scope": "state",
+  "infection_chance_modifiers":
+  [
+    {"young": -4},
+    {"old": -3}
+  ],
+  "happiness_modifiers":
+  [
+    {"all": -5}
+  ]
+}

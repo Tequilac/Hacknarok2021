@@ -1,0 +1,12 @@
+{
+  "name": "Limited public transport",
+  "scope": "state",
+  "infection_chance_modifiers":
+  [
+    {"all": -4}
+  ],
+  "happiness_modifiers":
+  [
+    {"all": -4}
+  ]
+}
