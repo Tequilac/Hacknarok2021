@@ -2,17 +2,13 @@ import pygame
 import menu
 import settings
 
-pygame.font.init()
-
 
 class App:
-    GAME_FONT = pygame.font.SysFont("Arial.ttf", 24)
-
     def __init__(self):
         self._running = True
         self._display_surf = None
-        self.size = self.weight, self.height = 640, 400
-        self.menu = menu.Menu()
+        self.size = self.width, self.height = settings.WINDOWS_SIZE
+        self.menu = menu.Menu(self.width)
 
     def on_init(self):
         pygame.init()
@@ -20,17 +16,13 @@ class App:
         self._running = True
 
         self._display_surf.fill(settings.Colors.BLUE.value)
-        textsurface = self.GAME_FONT.render('Menu XD', False, settings.Colors.WHITE.value)
-        self._display_surf.blit(textsurface, (0, 0))
+        self.menu.initialize(self._display_surf)
+
         pygame.display.update()
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
             self._running = False
-        if event.type == pygame.KEYDOWN:
-            pass
-        if event.type == pygame.KEYUP:
-            pass
 
     def on_loop(self):
         pass
@@ -43,6 +35,8 @@ class App:
 
     def on_execute(self):
         self.on_init()
+
+        self.menu.run(self._display_surf)
 
         while self._running:
             for event in pygame.event.get():

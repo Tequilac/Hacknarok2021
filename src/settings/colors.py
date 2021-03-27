@@ -14,4 +14,5 @@ class Colors(Enum):
     PURPLE = pygame.color.Color((102, 0, 102))
     LIGHT_PURPLE = pygame.color.Color((153, 0, 153))
     BLACK = pygame.color.Color((0, 0, 0))
+    VERY_LIGHT_BLUE = pygame.color.Color((124, 210, 249, 100))
 
