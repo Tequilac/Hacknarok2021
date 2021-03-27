@@ -1,0 +1,12 @@
+{
+  "name": "mandatory_hand_washing",
+  "scope": "city",
+  "infection_chance_modifiers":
+  [
+    {"wearing_mask": -10}
+  ],
+  "happiness_modifiers":
+  [
+    {"all": -10}
+  ]
+}
