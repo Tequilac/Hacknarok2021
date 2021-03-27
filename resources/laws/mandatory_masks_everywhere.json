@@ -3,11 +3,11 @@
   "scope": "state",
   "infection_chance_modifiers":
   [
-    {"all": -10}
+    {"all": -7}
   ],
   "happiness_modifiers":
   [
-    {"all": -10}
+    {"all": -7}
   ],
   "wearing_mask": 80,
   "exclusive_with":
