@@ -10,7 +10,8 @@ WINDOWS_SIZE = 950, 950
 
 # for font in pygame.font.get_fonts():
 #     print(font)
-MENU_FONT = pygame.font.SysFont("calibri", 50)
+MENU_FONT_SIZE = 50
+MENU_FONT = pygame.font.SysFont("calibri", MENU_FONT_SIZE)
 
 
 

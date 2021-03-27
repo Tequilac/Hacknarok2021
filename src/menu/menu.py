@@ -1,57 +1,79 @@
 import sys
-import settings
 import pygame
+
+from settings import MENU_FONT, Colors
 
 
 class Menu:
-    BUTTONS = [
-        'start_game',
-        'quit',
+    BUTTONS_INIT_HEIGHT = 200
+    BUTTONS_DIST = 10
+    BUTTONS_NAMES = [
+        'START',
+        'QUIT',
     ]
-    BUTTONS_HEIGHT = {
-        'start_game' : 150,
-        'quit' : 170,
-    }
 
     def __init__(self, width):
         self._running = True
         self.current_menu_option = 0
 
         self.width = width
+        self.buttons = {
+            self.BUTTONS_NAMES[0]: MENU_FONT.render(self.BUTTONS_NAMES[0],
+                                                    True,
+                                                    Colors.BLACK.value,
+                                                    Colors.VERY_LIGHT_BLUE.value),
+            self.BUTTONS_NAMES[1]: MENU_FONT.render(self.BUTTONS_NAMES[1],
+                                                    True,
+                                                    Colors.BLACK.value,
+                                                    Colors.VERY_LIGHT_BLUE.value),
+        }
+        self.buttons_num = len(self.BUTTONS_NAMES)
+        self.buttons_heights = []
+        height_sum = self.BUTTONS_INIT_HEIGHT
+        for i, button_name in enumerate(self.buttons.values()):
+            button_name = self.buttons[self.BUTTONS_NAMES[i]]
 
-        self.start_game_button = settings.MENU_FONT.render('Start', False, settings.Colors.BLACK.value,
-                                                           settings.Colors.VERY_LIGHT_BLUE.value)
-        # self.
+            self.buttons_heights += [height_sum]
+            height_sum += button_name.get_height() + self.BUTTONS_DIST
 
     def initialize(self, app_surface):
-        app_surface.fill(settings.Colors.BLUE.value)
-        textsurface = settings.MENU_FONT.render('Menu XD', False, settings.Colors.WHITE.value)
-
-        app_surface.blit(self.start_game_button, ((self.width - self.start_game_button.get_width()) // 2,
-                                                  self.BUTTONS_HEIGHT['start_game']))
-
+        app_surface.fill(Colors.BLUE.value)
+        self.draw_buttons(app_surface)
         pygame.display.update()
 
+    def draw_buttons(self, app_surface):
+        height_sum = self.BUTTONS_INIT_HEIGHT
+
+        for i, button_name in enumerate(self.buttons.values()):
+            app_surface.blit(button_name, ((self.width - button_name.get_width()) // 2, height_sum))
+            height_sum += button_name.get_height() + self.BUTTONS_DIST
 
     def on_render(self, app_surface):
-        pass
-        #app_surface.blit(self.start_game_button, ((self.width - self.start_game_button.get_width()) // 2,
-        #                                          self.BUTTONS_HEIGHT['start_game']))
-        # left_edge_cord = 0
-        # top_cord = self.BUTTONS_HEIGHT[self.BUTTONS[self.current_menu_option]]
-        # rectangle = pygame.Rect(left_edge_cord, top_cord, 30, 30)
-        # rect_surface = pygame.surface.Surface((rectangle.w, rectangle.h))
-        # pygame.draw.rect(app_surface, settings.Colors.VERY_LIGHT_BLUE.value, rectangle)
-        # pygame.display.update()
-        # app_surface.blit(rect_surface)
+        app_surface.fill(Colors.BLUE.value)
+        current_button = self.buttons[self.BUTTONS_NAMES[self.current_menu_option]]
+        left_cord = 0
+        top_cord = self.buttons_heights[self.current_menu_option]
+        rectangle = pygame.Rect((left_cord, top_cord), (self.width, current_button.get_height()))
+        pygame.draw.rect(app_surface, Colors.VERY_LIGHT_BLUE.value, rectangle)
+        self.draw_buttons(app_surface)
+        pygame.display.update()
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
             sys.exit(0)
-        if event.type == pygame.KEYUP:
-            self.current_menu_option = (self.current_menu_option + len(self.BUTTONS) - 1) % len(self.BUTTONS)
-        if event.type == pygame.KEYDOWN:
-            self.current_menu_option = (self.current_menu_option + 1) % len(self.BUTTONS)
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_DOWN:
+                self.current_menu_option = (self.current_menu_option - 1) % self.buttons_num
+            elif event.key == pygame.K_UP:
+                self.current_menu_option = (self.current_menu_option + 1) % self.buttons_num
+            elif event.key == pygame.K_RETURN:
+                self.action_perform()
+
+    def action_perform(self):
+        if self.BUTTONS_NAMES[self.current_menu_option] == 'START':
+            self._running = False
+        elif self.BUTTONS_NAMES[self.current_menu_option] == 'QUIT':
+            sys.exit(0)
 
     def run(self, app_surface):
         self.initialize(app_surface)
