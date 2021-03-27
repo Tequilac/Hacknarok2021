@@ -9,6 +9,21 @@ class City:
         self.location = location
         self.laws = laws
 
+    def get_healthy_pops(self):
+        return len(list(filter(lambda pop: pop.state == PopState.healthy, self.pops)))
+
+    def get_dead_pops(self):
+        return len(list(filter(lambda pop: pop.state == PopState.dead, self.pops)))
+
+    def get_ill_pops(self):
+        return len(list(filter(lambda pop: pop.state == PopState.ill, self.pops)))
+
+    def get_vaccinated_pops(self):
+        return len(list(filter(lambda pop: pop.state == PopState.vaccinated, self.pops)))
+
+    def get_recovered_pops(self):
+        return len(list(filter(lambda pop: pop.state == PopState.recovered, self.pops)))
+
     def introduce_law(self, law):
         self.laws.append(law)
         for pop in self.pops:
