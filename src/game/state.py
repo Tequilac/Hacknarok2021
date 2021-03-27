@@ -2,6 +2,7 @@ from random import randint
 
 from .pop_state import *
 
+
 class State:
     def __init__(self, laws, last_election, cities):
         self.laws = laws

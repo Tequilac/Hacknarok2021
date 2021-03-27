@@ -23,8 +23,6 @@ class App:
         initializer.initialize_background(settings.RESOURCES_PATH + 'country_map.png', self._display_surf)
         cities_list = initializer.initialize_cities(settings.RESOURCES_PATH + 'city.png', self._display_surf)
 
-
-
         pygame.display.flip()
 
     def on_event(self, event):

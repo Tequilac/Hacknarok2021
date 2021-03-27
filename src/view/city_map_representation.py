@@ -3,8 +3,8 @@ import pygame
 
 class CityMapRepresentation(pygame.sprite.Sprite):
     CITY_SIZE = {
-            'width': 70,
-            'height': 62,
+            'width': 85,
+            'height': 75,
     }
 
     def __init__(self, image_file, name, location):
