@@ -11,4 +11,7 @@ class Visualizer:
         for city in cities:
             city_representation = city_map_representation.\
                 CityMapRepresentation(file_name, city.name, city.location)
-            display_surf.blit(city_representation.image, city_representation.rect)
+            city_representation.render(display_surf)
+
+
+
