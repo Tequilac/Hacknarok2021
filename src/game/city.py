@@ -1,19 +1,12 @@
 from random import randint
-
-import pygame
-
 from .pop_state import *
 
-class City(pygame.sprite.Sprite):
-    def __init__(self, name, pops, image_file, law, location):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.transform.scale(pygame.image.load(image_file), (70, 62))
-        self.rect = self.image.get_rect()
-        self.rect.left, self.rect.top = location
 
+class City:
+    def __init__(self, name, pops, law, location):
         self.name = name
         self.pops = pops
-        self.x_cords, self.y_cords = location
+        self.location = location
         self.law = law
 
     def compute_pops_changes(self, state_laws, turn):
