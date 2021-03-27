@@ -2,6 +2,7 @@ import pygame
 from settings.initializer import Initializer
 import menu
 import settings
+from view.visualizer import Visualizer
 
 
 class App:
@@ -19,9 +20,13 @@ class App:
     def game_init(self):
         self._running = True
 
+        visualizer = Visualizer()
         initializer = Initializer()
-        initializer.initialize_background(settings.RESOURCES_PATH + 'country_map.png', self._display_surf)
-        cities_list = initializer.initialize_cities(settings.RESOURCES_PATH + 'city.png', self._display_surf)
+
+        cities_list = initializer.initialize_cities()
+
+        visualizer.initialize_background(settings.RESOURCES_PATH + 'country_map.png', self._display_surf)
+        visualizer.initialize_cities_on_map(cities_list, settings.RESOURCES_PATH + 'city.png', self._display_surf)
 
         pygame.display.flip()
 
