@@ -13,8 +13,8 @@ class Game:
 
     def next_turn(self):
         for city in self.state.cities:
-            city.compute_pops_changes(self.state.laws)
-        self.state.compute_migrations(self.state.laws)
+            city.compute_pops_changes(self.state.laws, self.turn)
+        self.state.compute_migrations()
         self.turn = self.turn + 1
 
     def create_laws(self):

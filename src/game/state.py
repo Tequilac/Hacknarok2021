@@ -4,3 +4,6 @@ class State:
         self.laws = laws
         self.last_election = last_election
         self.cities = cities
+
+    def compute_migrations(self):
+        pass
