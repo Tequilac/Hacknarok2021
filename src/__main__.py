@@ -1,10 +1,7 @@
 import pygame
-from game import city
-from src.view import background, city_map_representation, cities_parser
+from settings.initializator import Initializer
 import menu
 import settings
-
-RESOURCES_PATH = '../resources/'
 
 
 class App:
@@ -20,17 +17,13 @@ class App:
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
 
     def game_init(self):
-        self.back_ground = background.Background(RESOURCES_PATH + 'country_map.png', (0, 0))
-        self._display_surf.fill(settings.colors.Colors.WHITE.value)
-        self._display_surf.blit(self.back_ground.image, self.back_ground.rect)
         self._running = True
 
-        citiesList = cities_parser.load_cities()
-        for city_name, city_cord in citiesList:
-            city_obj = city.City(city_name, None, None, city_cord)
-            city_representation = city_map_representation.CityMapRepresentation(RESOURCES_PATH + 'city.png',
-                                                                                city_obj.location)
-            self._display_surf.blit(city_representation.image, city_representation.rect)
+        initializer = Initializer()
+        initializer.initialize_background(settings.RESOURCES_PATH + 'country_map.png', self._display_surf)
+        cities_list = initializer.initialize_cities(settings.RESOURCES_PATH + 'city.png', self._display_surf)
+
+
 
         pygame.display.flip()
 

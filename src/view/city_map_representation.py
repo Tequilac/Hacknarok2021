@@ -7,7 +7,8 @@ class CityMapRepresentation(pygame.sprite.Sprite):
             'height': 62,
     }
 
-    def __init__(self, image_file, location):
+    def __init__(self, image_file, name, location):
+        self.name = name
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(pygame.image.load(image_file),
                                             (self.CITY_SIZE['width'], self.CITY_SIZE['height']))
