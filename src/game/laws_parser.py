@@ -10,4 +10,7 @@ def load_law(file):
     scope = LawScope[data['scope']]
     infection_chance_modifiers = data['infection_chance_modifiers']
     happiness_modifiers = data['infection_chance_modifiers']
-    return Law(name, infection_chance_modifiers, happiness_modifiers, scope)
+    exclusive_with = None
+    if 'exclusive_with' in data:
+        exclusive_with = data['exclusive_with']
+    return Law(name, infection_chance_modifiers, happiness_modifiers, scope, exclusive_with)
