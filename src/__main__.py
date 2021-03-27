@@ -1,6 +1,7 @@
 import pygame
 from settings.initializer import Initializer
 import menu
+import game_over
 import settings
 from view.visualizer import Visualizer
 
@@ -12,6 +13,7 @@ class App:
         self.size = self.width, self.height = settings.WINDOWS_SIZE
         self.back_ground = None
         self.menu = menu.Menu(self.width)
+        self.game_over = game_over.GameOver(self.width)
 
     def on_init_pygame(self):
         pygame.init()
