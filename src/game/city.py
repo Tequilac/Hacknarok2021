@@ -3,11 +3,37 @@ from .pop_state import *
 
 
 class City:
-    def __init__(self, name, pops, law, location):
+    def __init__(self, name, pops, laws, location):
         self.name = name
         self.pops = pops
         self.location = location
-        self.law = law
+        self.laws = laws
+
+    def introduce_law(self, law):
+        self.laws.append(law)
+        for pop in self.pops:
+            for modifier in law.happiness_modifiers:
+                if 'all' in modifier:
+                    pop.happiness = pop.happiness + modifier['all']
+                elif 'wearing_mask' in modifier and pop.mask_on:
+                    pop.happiness = pop.happiness + modifier['wearing_mask']
+                elif 'young' in modifier and pop.age < 40:
+                    pop.happiness = pop.happiness + modifier['young']
+                elif 'old' in modifier and pop.age > 50:
+                    pop.happiness = pop.happiness + modifier['old']
+
+    def revoke_law(self, law):
+        self.laws.remove(law)
+        for pop in self.pops:
+            for modifier in law.happiness_modifiers:
+                if 'all' in modifier:
+                    pop.happiness = pop.happiness - modifier['all']
+                elif 'wearing_mask' in modifier and pop.mask_on:
+                    pop.happiness = pop.happiness - modifier['wearing_mask']
+                elif 'young' in modifier and pop.age < 40:
+                    pop.happiness = pop.happiness - modifier['young']
+                elif 'old' in modifier and pop.age > 50:
+                    pop.happiness = pop.happiness - modifier['old']
 
     def compute_pops_changes(self, state_laws, turn):
         ill_number = 0
@@ -27,11 +53,10 @@ class City:
                     pop.state = PopState.recovered
             elif pop.state == PopState.healthy:
                 infection_chance = int(100 * ill_number / len(self.pops))
-                self.compute_infection_chance(self.law, pop, infection_chance)
+                self.compute_infection_chance(self.laws, pop, infection_chance)
                 self.compute_infection_chance(state_laws, pop, infection_chance)
                 if randint(0, 99) < infection_chance:
                     pop.state = PopState.ill
-
 
     def compute_infection_chance(self, laws, pop, infection_chance):
         for law in laws:
