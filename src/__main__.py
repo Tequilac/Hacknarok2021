@@ -1,5 +1,5 @@
 import pygame
-from settings.initializator import Initializer
+from settings.initializer import Initializer
 import menu
 import settings
 
