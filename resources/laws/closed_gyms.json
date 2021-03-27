@@ -1,0 +1,12 @@
+{
+  "name": "Closed gyms",
+  "scope": "state",
+  "infection_chance_modifiers":
+  [
+    {"young": -2}
+  ],
+  "happiness_modifiers":
+  [
+    {"young": -3}
+  ]
+}

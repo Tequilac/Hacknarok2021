@@ -1,0 +1,13 @@
+{
+  "name": "Closed theaters",
+  "scope": "city",
+  "infection_chance_modifiers":
+  [
+    {"young": -2},
+    {"old": -3}
+  ],
+  "happiness_modifiers":
+  [
+    {"all": -2}
+  ]
+}

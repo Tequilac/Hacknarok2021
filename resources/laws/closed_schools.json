@@ -1,0 +1,13 @@
+{
+  "name": "Closed schools",
+  "scope": "state",
+  "infection_chance_modifiers":
+  [
+    {"all": -4}
+  ],
+  "happiness_modifiers":
+  [
+    {"young": -3},
+    {"old": -2}
+  ]
+}

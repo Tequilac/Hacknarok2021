@@ -1,0 +1,13 @@
+{
+  "name": "Closed hairdressing salon",
+  "scope": "state",
+  "infection_chance_modifiers":
+  [
+    {"all": -5}
+  ],
+  "happiness_modifiers":
+  [
+    {"young": -5},
+    {"old": -3}
+  ]
+}

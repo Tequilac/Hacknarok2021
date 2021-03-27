@@ -1,13 +1,12 @@
 {
-  "name": "Closed restaurants",
+  "name": "Closed kindergartens",
   "scope": "state",
   "infection_chance_modifiers":
   [
-    {"all": -5}
+    {"all": -4}
   ],
   "happiness_modifiers":
   [
-    {"young": -5},
-    {"old": -3}
+    {"all": -3}
   ]
 }

@@ -1,0 +1,12 @@
+{
+  "name": "Closed museums",
+  "scope": "city",
+  "infection_chance_modifiers":
+  [
+    {"all": -2}
+  ],
+  "happiness_modifiers":
+  [
+    {"all": -2}
+  ]
+}
