@@ -1,0 +1,21 @@
+{
+  "cities":
+  [
+    {"name": "Krakow", "cord": [574, 770], "pops_num" :  100},
+    {"name": "Katowice","cord": [445, 695], "pops_num" :  100},
+    {"name": "Opole","cord": [361, 645], "pops_num" :  100},
+    {"name": "Wroclaw","cord": [260, 586], "pops_num" :  100},
+    {"name": "Zielona Gora","cord": [125, 413], "pops_num" :  100},
+    {"name": "Szczecin","cord": [56, 235], "pops_num" :  100},
+    {"name": "Poznan","cord": [270, 383], "pops_num" :  100},
+    {"name": "Torun","cord": [436, 318], "pops_num" :  100},
+    {"name": "Gdansk","cord": [383, 120], "pops_num" :  100},
+    {"name": "Olsztyn","cord": [599, 186], "pops_num" :  100},
+    {"name": "Warszawa","cord": [641, 383], "pops_num" :  100},
+    {"name": "Bialystok","cord": [846, 291], "pops_num" :  100},
+    {"name": "Lublin","cord": [812, 563], "pops_num" :  100},
+    {"name": "Rzeszow","cord": [746, 745], "pops_num" :  100},
+    {"name": "Kielce","cord": [625, 643], "pops_num" :  100},
+    {"name": "Lodz","cord": [504, 511], "pops_num" :  100}
+  ]
+}
