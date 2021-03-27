@@ -1,0 +1,21 @@
+{
+  "cities":
+  [
+    {"name": "Krakow", "cord": [574, 770]},
+    {"name": "Katowice","cord": [445, 695]},
+    {"name": "Opole","cord": [361, 645]},
+    {"name": "Wroclaw","cord": [260, 586]},
+    {"name": "Zielona Gora","cord": [125, 413]},
+    {"name": "Szczecin","cord": [56, 235]},
+    {"name": "Poznan","cord": [270, 383]},
+    {"name": "Torun","cord": [436, 318]},
+    {"name": "Gdansk","cord": [383, 120]},
+    {"name": "Olsztyn","cord": [599, 186]},
+    {"name": "Warszawa","cord": [641, 383]},
+    {"name": "Bialystok","cord": [846, 291]},
+    {"name": "Lublin","cord": [812, 563]},
+    {"name": "Rzeszow","cord": [746, 745]},
+    {"name": "Kielce","cord": [625, 643]},
+    {"name": "Lodz","cord": [504, 511]}
+  ]
+}

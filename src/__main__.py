@@ -1,6 +1,6 @@
 import pygame
 from game import city
-from src.view import background, city_map_representation
+from src.view import background, city_map_representation, cities_parser
 import menu
 import settings
 
@@ -21,14 +21,15 @@ class App:
 
     def game_init(self):
         self.back_ground = background.Background(RESOURCES_PATH + 'country_map.png', (0, 0))
-
         self._display_surf.fill(settings.colors.Colors.WHITE.value)
         self._display_surf.blit(self.back_ground.image, self.back_ground.rect)
         self._running = True
 
-        for i in range(1, 16):
-            city_obj = city.City(i, None, None, (626 / i, 626 / i))
-            city_representation = city_map_representation.CityMapRepresentation(RESOURCES_PATH + 'city.png', city_obj.location)
+        citiesList = cities_parser.load_cities()
+        for city_name, city_cord in citiesList:
+            city_obj = city.City(city_name, None, None, city_cord)
+            city_representation = city_map_representation.CityMapRepresentation(RESOURCES_PATH + 'city.png',
+                                                                                city_obj.location)
             self._display_surf.blit(city_representation.image, city_representation.rect)
 
         pygame.display.flip()
@@ -38,6 +39,7 @@ class App:
             self._running = False
 
     def on_loop(self):
+        # print(pygame.mouse.get_pos())
         pass
 
     def on_render(self):
@@ -49,7 +51,7 @@ class App:
     def on_execute(self):
         self.on_init_pygame()
 
-        self.menu.run(self._display_surf)
+        #self.menu.run(self._display_surf)
 
         self.game_init()
 
