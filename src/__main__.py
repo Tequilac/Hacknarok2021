@@ -1,6 +1,9 @@
 import pygame
+from game import city, background
 import menu
 import settings
+
+RESOURCES_PATH = '../resources/'
 
 
 class App:
@@ -8,17 +11,25 @@ class App:
         self._running = True
         self._display_surf = None
         self.size = self.width, self.height = settings.WINDOWS_SIZE
+        self.back_ground = None
         self.menu = menu.Menu(self.width)
 
-    def on_init(self):
+    def on_init_pygame(self):
         pygame.init()
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
+
+    def game_init(self):
+        self.back_ground = background.Background(RESOURCES_PATH + 'country_map.png', (0, 0))
+
+        self._display_surf.fill(settings.colors.Colors.WHITE.value)
+        self._display_surf.blit(self.back_ground.image, self.back_ground.rect)
         self._running = True
 
-        self._display_surf.fill(settings.Colors.BLUE.value)
-        self.menu.initialize(self._display_surf)
+        for i in range(1, 16):
+            city_obj = city.City(i, None, RESOURCES_PATH + 'city.png', None, (626 / i, 626 / i))
+            self._display_surf.blit(city_obj.image, city_obj.rect)
 
-        pygame.display.update()
+        pygame.display.flip()
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
@@ -34,9 +45,11 @@ class App:
         pygame.quit()
 
     def on_execute(self):
-        self.on_init()
+        self.on_init_pygame()
 
-        self.menu.run(self._display_surf)
+        # self.menu.run(self._display_surf)
+
+        self.game_init()
 
         while self._running:
             for event in pygame.event.get():

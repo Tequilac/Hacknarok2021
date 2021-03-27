@@ -4,7 +4,7 @@ import pygame
 pygame.font.init()
 
 # General
-WINDOWS_SIZE = 640, 400
+WINDOWS_SIZE = 950, 950
 
 # Menu
 

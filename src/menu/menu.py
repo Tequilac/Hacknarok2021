@@ -24,8 +24,14 @@ class Menu:
         # self.
 
     def initialize(self, app_surface):
+        app_surface.fill(settings.Colors.BLUE.value)
+        textsurface = settings.MENU_FONT.render('Menu XD', False, settings.Colors.WHITE.value)
+
         app_surface.blit(self.start_game_button, ((self.width - self.start_game_button.get_width()) // 2,
                                                   self.BUTTONS_HEIGHT['start_game']))
+
+        pygame.display.update()
+
 
     def on_render(self, app_surface):
         pass
@@ -48,6 +54,8 @@ class Menu:
             self.current_menu_option = (self.current_menu_option + 1) % len(self.BUTTONS)
 
     def run(self, app_surface):
+        self.initialize(app_surface)
+
         while self._running:
             for event in pygame.event.get():
                 self.on_event(event)
