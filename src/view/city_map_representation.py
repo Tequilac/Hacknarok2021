@@ -1,13 +1,15 @@
 import pygame
 
-class CityMapRepresentation(pygame.sprite.Sprite):
-    def __init__(self, image_file, location):
-        CITY_SIZE = {
-            'width': 70,
-            'heigth': 62,
-        }
 
+class CityMapRepresentation(pygame.sprite.Sprite):
+    CITY_SIZE = {
+            'width': 70,
+            'height': 62,
+    }
+
+    def __init__(self, image_file, location):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.transform.scale(pygame.image.load(image_file), (CITY_SIZE['width'], CITY_SIZE['heigth']))
+        self.image = pygame.transform.scale(pygame.image.load(image_file),
+                                            (self.CITY_SIZE['width'], self.CITY_SIZE['height']))
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location

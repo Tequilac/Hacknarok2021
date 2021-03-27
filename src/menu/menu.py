@@ -81,4 +81,5 @@ class Menu:
         while self._running:
             for event in pygame.event.get():
                 self.on_event(event)
+
             self.on_render(app_surface)

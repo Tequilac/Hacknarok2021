@@ -51,7 +51,7 @@ class App:
     def on_execute(self):
         self.on_init_pygame()
 
-        #self.menu.run(self._display_surf)
+        self.menu.run(self._display_surf)
 
         self.game_init()
 
