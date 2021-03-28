@@ -14,7 +14,7 @@ class Game:
         laws = self.create_laws()
         self.state_laws = laws[0]
         self.city_laws = laws[1]
-        self.state = State(self.state_laws, 0, cities)
+        self.state = State([], 0, cities)
         self.elections = Elections(self.state)
 
     def next_turn(self) -> None:
