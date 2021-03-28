@@ -73,7 +73,7 @@ class State:
     def compute_migrations(self) -> None:
         for i in range(len(self.cities)):
             for pop in self.cities[i].pops:
-                if randint(0, 99) < self.migration_chance:
+                if pop.state != PopState.dead and randint(0, 99) < self.migration_chance:
                     self.cities[i].pops.remove(pop)
                     chosen_city = randint(1, len(self.cities) - 1)
                     self.cities[(i + chosen_city) % len(self.cities)].pops.append(pop)

@@ -123,9 +123,7 @@ class City:
             return randint(0, 99)
 
         for pop in self.pops:
-            if pop.state == PopState.dead:
-                self.pops.remove(pop)
-            elif pop.state == PopState.ill:
+            if pop.state == PopState.ill:
                 if dice_roll() < self.DEATH_CHANCE:
                     pop.state = PopState.dead
                 elif dice_roll() < self.QUARANTINE_CHANCE:

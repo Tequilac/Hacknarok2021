@@ -1,6 +1,7 @@
 import pygame
 import menu
 import settings
+import sys
 import game_over
 import game
 from settings import Paths
@@ -46,7 +47,7 @@ class App:
 
     def on_event(self, event):
         if event.type == pygame.QUIT:
-            self._running = False
+            sys.exit(0)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
             mouse_sprite = pygame.sprite.Sprite()
@@ -124,6 +125,10 @@ class App:
             self.on_loop()
             self.on_render()
 
+            if self.game.elections.last_elections_result < 30:
+                self._running = False
+
+        self.game_over.run(self._display_surf)
         self.on_cleanup()
 
 
