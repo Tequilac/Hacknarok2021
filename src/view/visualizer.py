@@ -115,6 +115,10 @@ class Visualizer:
                                      Colors.BLACK.value))
 
         self.clear_law_info_field(display_surf)
+        for button in self.buttons:
+            if button.button_type == 'ENACT_REVOKE_TYPE':
+                self.buttons.remove(button)
+
         for i in range(len(surfs)):
             display_surf.blit(surfs[i], (self.law_info_position[0], self.law_info_position[1] + 20*i))
             if i == len(surfs) - 1:
