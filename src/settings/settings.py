@@ -4,7 +4,7 @@ import pygame
 pygame.font.init()
 
 # General
-WINDOWS_SIZE = 1000, 1000
+WINDOWS_SIZE = 1640, 1000
 RESOURCES_PATH = '../resources/'
 
 # Menu

@@ -2,15 +2,16 @@ import os
 from .laws_parser import *
 from .law_scope import *
 from .law import *
+from .state import *
 
 
 class Game:
-    def __init__(self, turn, state):
+    def __init__(self, turn, cities):
         self.turn = turn
-        self.state = state
         laws = self.create_laws()
         self.state_laws = laws[0]
         self.city_laws = laws[1]
+        self.state = State(self.state_laws, 0, cities)
 
     def next_turn(self):
         self.state.save_turn_data()
