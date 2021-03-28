@@ -1,6 +1,7 @@
 from .background import *
 from .city_map_representation import *
 from .city_options_button import *
+from game import Law
 from settings import Colors
 
 
@@ -12,11 +13,14 @@ class Visualizer:
     }
     CITY_INFO_FONT_SIZE = 18
     CITY_INFO_FONT = pygame.font.SysFont("calibri", CITY_INFO_FONT_SIZE)
+    LAW_INFO_FONT_SIZE = 16
+    LAW_INFO_FONT = pygame.font.SysFont("calibri", CITY_INFO_FONT_SIZE)
 
     def __init__(self):
         self.first_city_options_button_position = (1006, 272)
         self.first_state_options_button_position = (1455, 20)
         self.city_info_position = (1030, 35)
+        self.law_info_position = (2137, 420)
         self.buttons = []
         self.current_selected_city = None
 
@@ -90,6 +94,29 @@ class Visualizer:
         display_surf.blit(ill_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 80))
         display_surf.blit(dead_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 100))
         display_surf.blit(happiness_surf, (self.city_info_position[0], self.city_info_position[1] + 120))
+
+    def display_law_info(self, law: Law, active: bool, display_surf):
+        font = self.LAW_INFO_FONT
+        name_text_surf = font.render(str(law.name), True, Colors.BLACK.value)
+        surfs = [name_text_surf]
+        for modifier in law.infection_chance_modifiers:
+            surfs.append(font.render("Decreases chance of infection for " + modifier.keys()[0] + " pops", True,
+                                     Colors.BLACK.value))
+        for modifier in law.happiness_modifiers:
+            if modifier[modifier.keys()[0]] < 0:
+                word = "Decreases"
+            else:
+                word = "Increases"
+            surfs.append(font.render(word + " happiness for " + modifier.keys()[0] + " pops", True,
+                                     Colors.BLACK.value))
+
+        if active:
+            surfs.append(font.render("Revoke", True, Colors.BLACK.value))
+        else:
+            surfs.append(font.render("Introduce", True, Colors.BLACK.value))
+
+        for i in range(len(surfs)):
+            display_surf.blit(surfs[i], (self.law_info_position[0], self.law_info_position[1] + 20*i))
 
     def clear_city_info_field(self, display_surf):
         surface = pygame.Surface((250, 150))
