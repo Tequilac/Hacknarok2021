@@ -14,6 +14,7 @@ class State:
         self.last_election = last_election
         self.cities = cities
         self.migration_chance = self.INITIAL_MIGRATION_CHANCE
+        self.previous_turn_data = {}
 
     def get_pops_num_by_state(self, pop_state: PopState) -> int:
         all_pops = reduce(lambda x, y: x + y, [city.pops for city in self.cities])
@@ -22,19 +23,26 @@ class State:
     def get_healthy_pops_num(self) -> int:
         return self.get_pops_num_by_state(PopState.healthy)
 
-    def get_dead_pops(self) -> int:
+    def get_dead_pops_num(self) -> int:
         return self.get_pops_num_by_state(PopState.dead)
 
-    def get_ill_pops(self) -> int:
+    def get_ill_pops_num(self) -> int:
         return self.get_pops_num_by_state(PopState.ill)
 
-    def get_vaccinated_pops(self) -> int:
+    def get_vaccinated_pops_num(self) -> int:
         return self.get_pops_num_by_state(PopState.vaccinated)
 
-    def get_recovered_pops(self) -> int:
+    def get_recovered_pops_num(self) -> int:
         return self.get_pops_num_by_state(PopState.recovered)
 
-    def introduce_law(self, law: Law):
+    def save_turn_data(self) -> None:
+        self.previous_turn_data['healthy'] = self.get_healthy_pops_num()
+        self.previous_turn_data['dead'] = self.get_dead_pops_num()
+        self.previous_turn_data['ill'] = self.get_ill_pops_num()
+        self.previous_turn_data['vaccinated'] = self.get_vaccinated_pops_num()
+        self.previous_turn_data['recovered'] = self.get_recovered_pops_num()
+
+    def introduce_law(self, law: Law) -> None:
         if law.exclusive_with:
             for current_law in self.laws:
                 if law.exclusive_with == current_law.name:
@@ -45,41 +53,23 @@ class State:
             self.migration_chance = 1
         self.laws.append(law)
         for city in self.cities:
-            for pop in city:
+            for pop in city.pops:
                 for modifier in law.happiness_modifiers:
-                    if 'all' in modifier:
-                        pop.happiness = pop.happiness + modifier['all']
-                    elif 'wearing_mask' in modifier and pop.mask_on:
-                        pop.happiness = pop.happiness + modifier['wearing_mask']
-                    elif 'not_wearing_mask' in modifier and not pop.mask_on:
-                        pop.happiness = pop.happiness + modifier['not_wearing_mask']
-                    elif 'young' in modifier and pop.age < 40:
-                        pop.happiness = pop.happiness + modifier['young']
-                    elif 'old' in modifier and pop.age > 50:
-                        pop.happiness = pop.happiness + modifier['old']
+                    pop.apply_modifier(modifier)
 
-    def revoke_law(self, law: Law):
+    def revoke_law(self, law: Law) -> None:
         if law.name == 'No migration' or law.name == 'Limited migration':
-            self.migration_chance = 2
+            self.migration_chance = self.INITIAL_MIGRATION_CHANCE
         self.laws.remove(law)
         for city in self.cities:
-            for pop in city:
+            for pop in city.pops:
                 for modifier in law.happiness_modifiers:
-                    if 'all' in modifier:
-                        pop.happiness = pop.happiness - modifier['all']
-                    elif 'wearing_mask' in modifier and pop.mask_on:
-                        pop.happiness = pop.happiness - modifier['wearing_mask']
-                    elif 'not_wearing_mask' in modifier and not pop.mask_on:
-                        pop.happiness = pop.happiness - modifier['not_wearing_mask']
-                    elif 'young' in modifier and pop.age < 40:
-                        pop.happiness = pop.happiness - modifier['young']
-                    elif 'old' in modifier and pop.age > 50:
-                        pop.happiness = pop.happiness - modifier['old']
+                    pop.remove_modifier(modifier)
 
-    def compute_migrations(self):
+    def compute_migrations(self) -> None:
         for i in range(len(self.cities)):
             for pop in self.cities[i].pops:
                 if randint(0, 99) < self.migration_chance:
                     self.cities[i].pops.remove(pop)
                     chosen_city = randint(1, len(self.cities) - 1)
-                    self.cities[(i + chosen_city) % len(self.cities)].append(pop)
+                    self.cities[(i + chosen_city) % len(self.cities)].pops.append(pop)

@@ -1,0 +1,14 @@
+{
+  "name": "Closed universities",
+  "scope": "city",
+  "infection_chance_modifiers":
+  [
+    {"young": -3},
+    {"old": -1}
+  ],
+  "happiness_modifiers":
+  [
+    {"young": 3},
+    {"old": -2}
+  ]
+}

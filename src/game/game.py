@@ -1,6 +1,8 @@
 import os
 import settings
-from parsers.laws_parser import *
+import parsers
+from typing import List
+from .law import Law
 from .law_scope import *
 from .state import State
 
@@ -14,7 +16,9 @@ class Game:
         self.city_laws = laws[1]
 
     def next_turn(self) -> None:
+        self.state.save_turn_data()
         for city in self.state.cities:
+            city.save_turn_data()
             city.compute_pops_changes(self.state.laws, self.turn)
         self.state.compute_migrations()
         self.turn = self.turn + 1
@@ -25,7 +29,7 @@ class Game:
         laws_path = settings.Paths.RESOURCES / 'laws'
 
         for file in os.listdir(laws_path):
-            law = LawsParser(laws_path / file).load_law()
+            law = parsers.LawsParser(laws_path / file).load_law()
             if law.scope == LawScope.state:
                 state_laws.append(law)
             else:

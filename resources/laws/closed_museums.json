@@ -1,12 +1,12 @@
 {
-  "name": "Mandatory social distancing",
+  "name": "Closed museums",
   "scope": "city",
   "infection_chance_modifiers":
   [
-    {"not_wearing_mask": -7}
+    {"all": -2}
   ],
   "happiness_modifiers":
   [
-    {"all": -4}
+    {"all": -2}
   ]
 }

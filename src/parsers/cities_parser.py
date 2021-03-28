@@ -1,15 +1,15 @@
 import json
 from typing import List
 from game import City
-from pathlib import Path
+from settings import Paths
 
 
 class CitiesParser:
-    def __init__(self, filepath: Path):
-        self.filepath = filepath
+    CITIES_PATH = Paths.RESOURCES / 'cities.json'
 
-    def load_cities(self) -> List[City]:
-        with open(self.filepath, 'r') as f:
+    @staticmethod
+    def load_cities() -> List[City]:
+        with open(CitiesParser.CITIES_PATH, 'r') as f:
             data = json.load(f)
         cities = data['cities']
         cities_list = []

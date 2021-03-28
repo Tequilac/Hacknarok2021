@@ -1,5 +1,5 @@
 {
-  "name": "Closed churches",
+  "name": "Limited public transport",
   "scope": "state",
   "infection_chance_modifiers":
   [
@@ -7,7 +7,6 @@
   ],
   "happiness_modifiers":
   [
-    {"old": -8},
-    {"young": -3}
+    {"all": -4}
   ]
 }

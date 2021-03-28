@@ -1,13 +1,13 @@
 {
-  "name": "Closed churches",
+  "name": "Ban on special events",
   "scope": "state",
   "infection_chance_modifiers":
   [
-    {"all": -4}
+    {"young": -4},
+    {"old": -3}
   ],
   "happiness_modifiers":
   [
-    {"old": -8},
-    {"young": -3}
+    {"all": -5}
   ]
 }

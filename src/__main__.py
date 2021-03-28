@@ -1,6 +1,9 @@
 import pygame
 import menu
 import settings
+import game_over
+
+from view.visualizer import Visualizer
 
 
 class App:
@@ -10,6 +13,8 @@ class App:
         self.size = self.width, self.height = settings.WINDOWS_SIZE
         self.back_ground = None
         self.menu = menu.Menu(self.width)
+        self.game = None
+        self.game_over = game_over.GameOver(self.width)
 
     def on_init_pygame(self):
         pygame.init()
@@ -18,9 +23,12 @@ class App:
     def game_init(self):
         self._running = True
 
-        initializer = settings.Initializer()
-        initializer.initialize_background(settings.Paths.RESOURCES / 'country_map.png', self._display_surf)
-        cities_list = initializer.initialize_cities(settings.Paths.RESOURCES / 'city.png', self._display_surf)
+        visualizer = Visualizer()
+
+        cities_list = settings.Initializer.initialize_cities()
+
+        visualizer.initialize_background(settings.Paths.RESOURCES / 'country_map.png', self._display_surf)
+        visualizer.initialize_cities_on_map(cities_list, settings.Paths.RESOURCES / 'city.png', self._display_surf)
 
         pygame.display.flip()
 

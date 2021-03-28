@@ -1,5 +1,5 @@
 {
-  "name": "Closed churches",
+  "name": "Closed schools",
   "scope": "state",
   "infection_chance_modifiers":
   [
@@ -7,7 +7,7 @@
   ],
   "happiness_modifiers":
   [
-    {"old": -8},
-    {"young": -3}
+    {"young": -3},
+    {"old": -2}
   ]
 }

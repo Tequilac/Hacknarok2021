@@ -1,13 +1,13 @@
 {
-  "name": "Closed churches",
+  "name": "Closed hairdressing salon",
   "scope": "state",
   "infection_chance_modifiers":
   [
-    {"all": -4}
+    {"all": -5}
   ],
   "happiness_modifiers":
   [
-    {"old": -8},
-    {"young": -3}
+    {"young": -5},
+    {"old": -3}
   ]
 }

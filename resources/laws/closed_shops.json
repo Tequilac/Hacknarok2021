@@ -7,7 +7,7 @@
   ],
   "happiness_modifiers":
   [
-    {"young": -10},
-    {"old": -7}
+    {"young": -7},
+    {"old": -5}
   ]
 }

@@ -10,11 +10,13 @@ class City:
     QUARANTINE_CHANCE = 20
     RECOVERED_CHANCE = 30
     
-    def __init__(self, name: str, pops: List[Pop], location: Tuple[int], laws=None):
+    def __init__(self, name: str, pops_num: int, location: Tuple[int], laws=None, pops=None):
         self.name = name
-        self.pops = pops
+        self.pops_num = pops_num
         self.location = location
         self.laws = laws if laws else []
+        self.pops = pops if pops else []
+        self.previous_turn_data = {}
 
     def get_pops_num_by_state(self, pop_state: PopState):
         return len([pop for pop in self.pops if pop.state == pop_state])
@@ -34,41 +36,35 @@ class City:
     def get_recovered_pops_num(self) -> int:
         return self.get_pops_num_by_state(PopState.recovered)
 
+    def save_turn_data(self):
+        self.previous_turn_data['healthy'] = self.get_healthy_pops_num()
+        self.previous_turn_data['dead'] = self.get_dead_pops_num()
+        self.previous_turn_data['ill'] = self.get_ill_pops_num()
+        self.previous_turn_data['vaccinated'] = self.get_vaccinated_pops_num()
+        self.previous_turn_data['recovered'] = self.get_recovered_pops_num()
+
     def introduce_law(self, law: Law) -> None:
         self.laws.append(law)
         for pop in self.pops:
             for modifier in law.happiness_modifiers:
-                if 'all' in modifier:
-                    pop.happiness = pop.happiness + modifier['all']
-                elif 'wearing_mask' in modifier and pop.mask_on:
-                    pop.happiness = pop.happiness + modifier['wearing_mask']
-                elif 'not_wearing_mask' in modifier and not pop.mask_on:
-                    pop.happiness = pop.happiness - modifier['not_wearing_mask']
-                elif 'young' in modifier and pop.age < 40:
-                    pop.happiness = pop.happiness + modifier['young']
-                elif 'old' in modifier and pop.age > 50:
-                    pop.happiness = pop.happiness + modifier['old']
+                pop.apply_modifier(modifier)
 
     def revoke_law(self, law: Law) -> None:
         self.laws.remove(law)
         for pop in self.pops:
             for modifier in law.happiness_modifiers:
-                if 'all' in modifier:
-                    pop.happiness = pop.happiness - modifier['all']
-                elif 'wearing_mask' in modifier and pop.mask_on:
-                    pop.happiness = pop.happiness - modifier['wearing_mask']
-                elif 'not_wearing_mask' in modifier and not pop.mask_on:
-                    pop.happiness = pop.happiness - modifier['not_wearing_mask']
-                elif 'young' in modifier and pop.age < 40:
-                    pop.happiness = pop.happiness - modifier['young']
-                elif 'old' in modifier and pop.age > 50:
-                    pop.happiness = pop.happiness - modifier['old']
+                pop.remove_modifier(modifier)
 
     def compute_pops_changes(self, state_laws: List[Law], turn: int) -> None:
         ill_number = 0
         for pop in self.pops:
             if pop.state == PopState.ill:
-                ill_number += 1
+                num = 1
+                if pop.quarantined:
+                    num = num / 2
+                if pop.mask_on:
+                    num = num / 2
+                ill_number += num
 
         def dice_roll() -> int:
             return randint(0, 99)
@@ -94,8 +90,20 @@ class City:
                 if dice_roll() < self.RECOVERED_CHANCE:
                     pop.state = PopState.healthy
 
+        wearing_mask = 0
+        for law in state_laws:
+            if law.wearing_mask:
+                wearing_mask = law.wearing_mask
+        for pop in self.pops:
+            if pop.mask_on:
+                if dice_roll() < wearing_mask - (100 - pop.happiness):
+                    pop.mask_on = False
+            else:
+                if dice_roll() > wearing_mask - (100 - pop.happiness):
+                    pop.mask_on = True
+
     @staticmethod
-    def compute_infection_chance(laws: List[Law], pop: Pop, infection_chance: int):
+    def compute_infection_chance(laws: List[Law], pop: Pop, infection_chance: int) -> int:
         for law in laws:
             for modifier in law.infection_chance_modifiers:
                 if 'all' in modifier:

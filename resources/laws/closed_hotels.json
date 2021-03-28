@@ -1,0 +1,14 @@
+{
+  "name": "Closed hotels",
+  "scope": "state",
+  "infection_chance_modifiers":
+  [
+    {"young": -3},
+    {"old":  -1}
+  ],
+  "happiness_modifiers":
+  [
+    {"young": -3},
+    {"old":  -1}
+  ]
+}
