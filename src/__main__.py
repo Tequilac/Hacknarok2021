@@ -1,5 +1,4 @@
 import pygame
-from settings.initializer import Initializer
 import menu
 import settings
 import game_over
@@ -32,7 +31,7 @@ class App:
         self.visualizer.initialize_cities_on_map(cities_list, settings.Paths.RESOURCES / 'city.png', self._display_surf)
         self.visualizer.initialize_city_options_buttons(self.game.city_laws, self._display_surf)
         self.visualizer.initialize_state_options_buttons(self.game.state_laws, self._display_surf)
-        self.visualizer.initialize_next_turn_button(settings.Paths.RESOURCES / 'next_turn.jpg', self._display_surf)
+        self.visualizer.initialize_next_turn_button(settings.Paths.RESOURCES / 'next_turn.png', self._display_surf)
 
         pygame.display.flip()
         pygame.display.update()
@@ -48,8 +47,8 @@ class App:
                 if pygame.sprite.collide_rect(button, mouse_sprite):
                     if button.button_type == 'CITY_MAP_BUTTON':
                         for city in self.game.state.cities:
-                            if(city.name == button.name):
-                                if(self.visualizer.current_selected_city is not None):
+                            if city.name == button.name:
+                                if self.visualizer.current_selected_city is not None:
                                     self.visualizer.clear_city_info_field(self._display_surf)
                                 self.visualizer.display_city_info(city, self._display_surf)
                                 self.visualizer.update_city_buttons(self._display_surf, self.game)
