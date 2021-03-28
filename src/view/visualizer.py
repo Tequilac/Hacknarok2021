@@ -119,14 +119,24 @@ class Visualizer:
         name_text_surf = font.render(str(law.name), True, Colors.BLACK.value)
         surfs = [name_text_surf]
         for modifier in law.infection_chance_modifiers:
-            surfs.append(font.render("Decreases chance of infection for " + list(modifier.keys())[0] + " pops", True,
+            if modifier[list(modifier.keys())[0]] < 0:
+                word = "Decreases"
+            else:
+                word = "Increases"
+            group = str(list(modifier.keys())[0]) + " pops"
+            if list(modifier.keys())[0] in ["wearing_mask", "not_wearing_mask"]:
+                group = "pops " + str(list(modifier.keys())[0]).replace('_', " ")
+            surfs.append(font.render( word + " chance of infection for " + group, True,
                                      Colors.BLACK.value))
         for modifier in law.happiness_modifiers:
             if modifier[list(modifier.keys())[0]] < 0:
                 word = "Decreases"
             else:
                 word = "Increases"
-            surfs.append(font.render(word + " happiness for " + list(modifier.keys())[0] + " pops", True,
+            group = str(list(modifier.keys())[0]) + " pops"
+            if list(modifier.keys())[0] in ["wearing_mask", "not_wearing_mask"]:
+                group = "pops " + str(list(modifier.keys())[0]).replace('_', " ")
+            surfs.append(font.render(word + " happiness for " + group, True,
                                      Colors.BLACK.value))
 
         self.clear_law_info_field(display_surf)
