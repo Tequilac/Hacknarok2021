@@ -79,13 +79,37 @@ class App:
                         elif button.button_type == 'STATE_BUTTON':
                             for law in self.game.state_laws:
                                 if law.name == button.name:
+                                    current_selected_city = self.visualizer.current_selected_city
+                                    self.visualizer.current_selected_law = law
+                                    self.visualizer.update_city_buttons(self._display_surf, self.game)
+                                    button.surface.fill(settings.Colors.VERY_LIGHT_BLUE.value)
+                                    if law in current_selected_city.laws:
+                                        self.visualizer.display_law_info(law, False, self._display_surf)
+                                    else:
+                                        self.visualizer.display_law_info(law, True, self._display_surf)
+                                        #button.surface.fill(settings.Colors.GREEN.value)
+                                    button.render(self._display_surf)
+                        elif button.button_type == 'STATE_BUTTON':
+                            for law in self.game.state_laws:
+                                if law.name == button.name:
                                     if law in self.game.state.laws:
                                         button.surface.fill(settings.Colors.RED.value)
                                     else:
                                         button.surface.fill(settings.Colors.GREEN.value)
                                     button.render(self._display_surf)
-                    elif button.name == 'NEXT_TURN':
-                        self.game.next_turn()
+                        elif button.button_type == 'ENACT_REVOKE_TYPE':
+                            if button.name == 'Enact law':
+                                self.visualizer.current_selected_city.introduce_law(self.visualizer.current_selected_law)
+                                self.visualizer.display_law_info(self.visualizer.current_selected_law, True, self._display_surf)
+
+                            else:
+                                self.visualizer.current_selected_city.revoke_law(self.visualizer.current_selected_law)
+                                self.visualizer.display_law_info(self.visualizer.current_selected_law, False, self._display_surf)
+                            self.visualizer.buttons.remove(button)
+                            #self.visualizer.clear_law_button_field(button.rect, self._display_surf)
+                            self.visualizer.update_city_buttons(self._display_surf, self.game)
+                elif button.name == 'NEXT_TURN':
+                    self.game.next_turn()
 
     def on_loop(self):
         #print(pygame.mouse.get_pos())
