@@ -112,7 +112,7 @@ class City:
         ill_number = 0
         for pop in self.pops:
             if pop.state == PopState.ill:
-                num = 1
+                num = 4
                 if pop.quarantined:
                     num = num / 2
                 if pop.mask_on:
