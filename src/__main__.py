@@ -2,8 +2,8 @@ import pygame
 import menu
 import settings
 import game_over
-
-from view.visualizer import Visualizer
+import game
+from view import Visualizer
 
 
 class App:
@@ -14,6 +14,7 @@ class App:
         self.back_ground = None
         self.menu = menu.Menu(self.width)
         self.game = None
+        self.visualizer = Visualizer
         self.game_over = game_over.GameOver(self.width)
 
     def on_init_pygame(self):
@@ -26,9 +27,11 @@ class App:
         visualizer = Visualizer()
 
         cities_list = settings.Initializer.initialize_cities()
+        self.game = game.Game(0, cities_list)
 
         visualizer.initialize_background(settings.Paths.RESOURCES / 'country_map.png', self._display_surf)
         visualizer.initialize_cities_on_map(cities_list, settings.Paths.RESOURCES / 'city.png', self._display_surf)
+        visualizer.initialize_city_options_buttons(self.game.city_laws, self._display_surf)
 
         pygame.display.flip()
 
@@ -37,7 +40,7 @@ class App:
             self._running = False
 
     def on_loop(self):
-        # print(pygame.mouse.get_pos())
+        #print(pygame.mouse.get_pos())
         pass
 
     def on_render(self):

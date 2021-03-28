@@ -9,7 +9,7 @@ from pathlib import Path
 pygame.font.init()
 
 # General
-WINDOWS_SIZE = 1000, 1000
+WINDOWS_SIZE = 1640, 1000
 
 # Menu
 MENU_FONT_SIZE = 50

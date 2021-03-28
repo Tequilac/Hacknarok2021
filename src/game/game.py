@@ -1,19 +1,17 @@
 import os
 import settings
 import parsers
-from typing import List
-from .law import Law
-from .law_scope import *
-from .state import State
+from .law import *
+from .state import *
 
 
 class Game:
-    def __init__(self, turn: int, state: State):
+    def __init__(self, turn: int, cities: List[City]):
         self.turn = turn
-        self.state = state
         laws = self.create_laws()
         self.state_laws = laws[0]
         self.city_laws = laws[1]
+        self.state = State(self.state_laws, 0, cities)
 
     def next_turn(self) -> None:
         self.state.save_turn_data()
@@ -21,7 +19,7 @@ class Game:
             city.save_turn_data()
             city.compute_pops_changes(self.state.laws, self.turn)
         self.state.compute_migrations()
-        self.turn = self.turn + 1
+        self.turn += 1
 
     def create_laws(self) -> List[List[Law]]:
         state_laws = []
