@@ -3,10 +3,10 @@
   "scope": "city",
   "infection_chance_modifiers":
   [
-    {"wearing_mask": -7}
+    {"all": -7}
   ],
   "happiness_modifiers":
   [
-    {"all": -7}
+    {"all": -5}
   ]
 }

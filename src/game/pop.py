@@ -16,7 +16,7 @@ class Pop:
         elif 'wearing_mask' in modifier and self.mask_on:
             self.happiness = self.happiness + modifier['wearing_mask']
         elif 'not_wearing_mask' in modifier and not self.mask_on:
-            self.happiness = self.happiness - modifier['not_wearing_mask']
+            self.happiness = self.happiness + modifier['not_wearing_mask']
         elif 'young' in modifier and self.age < 40:
             self.happiness = self.happiness + modifier['young']
         elif 'old' in modifier and self.age > 50:

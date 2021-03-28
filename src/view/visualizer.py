@@ -71,11 +71,12 @@ class Visualizer:
         self.current_selected_city = city
         font = self.CITY_INFO_FONT
         name_text_surf = font.render(str(city.name), True, Colors.BLACK.value)
-        healthy_pops_text_surf = font.render("Num of healthy pops:" + str(city.get_healthy_pops_num()), True, Colors.BLACK.value)
-        recovered_pops_text_surf = font.render("Num of recovered pops:" + str(city.get_recovered_pops_num()), True, Colors.BLACK.value)
-        vaccinated_pops_text_surf = font.render("Num of vaccinated pops:" + str(city.get_vaccinated_pops_num()), True, Colors.BLACK.value)
-        ill_pops_text_surf = font.render("Num of ill pops:" + str(city.get_ill_pops_num()), True, Colors.BLACK.value)
-        dead_pops_text_surf = font.render("Num of dead pops:" + str(city.get_dead_pops_num()), True, Colors.BLACK.value)
+        healthy_pops_text_surf = font.render("Num of healthy pops: " + str(city.get_healthy_pops_num()), True, Colors.BLACK.value)
+        recovered_pops_text_surf = font.render("Num of recovered pops: " + str(city.get_recovered_pops_num()), True, Colors.BLACK.value)
+        vaccinated_pops_text_surf = font.render("Num of vaccinated pops: " + str(city.get_vaccinated_pops_num()), True, Colors.BLACK.value)
+        ill_pops_text_surf = font.render("Num of ill pops: " + str(city.get_ill_pops_num()), True, Colors.BLACK.value)
+        dead_pops_text_surf = font.render("Num of dead pops: " + str(city.get_dead_pops_num()), True, Colors.BLACK.value)
+        happiness_surf = font.render("Average happiness: " + str(city.get_average_pops_happiness()), True, Colors.BLACK.value)
 
         display_surf.blit(name_text_surf, self.city_info_position)
         display_surf.blit(healthy_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 20))
@@ -83,6 +84,7 @@ class Visualizer:
         display_surf.blit(vaccinated_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 60))
         display_surf.blit(ill_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 80))
         display_surf.blit(dead_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 100))
+        display_surf.blit(happiness_surf, (self.city_info_position[0], self.city_info_position[1] + 120))
 
     def clear_city_info_field(self, display_surf):
         surface = pygame.Surface((250, 150))

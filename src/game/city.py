@@ -36,6 +36,9 @@ class City:
     def get_recovered_pops_num(self) -> int:
         return self.get_pops_num_by_state(PopState.recovered)
 
+    def get_average_pops_happiness(self) -> int:
+        return sum(map(lambda pop: pop.happiness, self.pops))/len(self.pops)
+
     def save_turn_data(self):
         self.previous_turn_data['healthy'] = self.get_healthy_pops_num()
         self.previous_turn_data['dead'] = self.get_dead_pops_num()
