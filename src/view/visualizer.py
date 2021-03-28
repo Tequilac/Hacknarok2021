@@ -24,6 +24,7 @@ class Visualizer:
         self.law_info_position = (1009, 657)
         self.buttons = []
         self.current_selected_city = None
+        self.current_selected_law = None
 
     def initialize_background(self, file_name, display_surf):
         back_ground = Background(file_name, (0, 0))
@@ -113,8 +114,8 @@ class Visualizer:
             surfs.append(font.render(word + " happiness for " + list(modifier.keys())[0] + " pops", True,
                                      Colors.BLACK.value))
 
+        self.clear_law_info_field(display_surf)
         for i in range(len(surfs)):
-            self.clear_law_info_field(display_surf)
             display_surf.blit(surfs[i], (self.law_info_position[0], self.law_info_position[1] + 20*i))
             if i == len(surfs) - 1:
                 if active:
@@ -132,7 +133,10 @@ class Visualizer:
                     revoke_law_button.render(display_surf)
                     self.buttons.append(revoke_law_button)
 
-
+    def clear_law_button_field(self, button_rect, display_surf):
+        surface = pygame.Surface((250, 150))
+        surface.fill(Colors.WHITE.value)
+        display_surf.blit(surface, button_rect)
 
     def clear_city_info_field(self, display_surf):
         surface = pygame.Surface((250, 150))
@@ -140,7 +144,7 @@ class Visualizer:
         display_surf.blit(surface, self.city_info_position)
 
     def clear_law_info_field(self, display_surf):
-        surface = pygame.Surface((300, 350))
+        surface = pygame.Surface((440, 400))
         surface.fill(Colors.WHITE.value)
         display_surf.blit(surface, self.law_info_position)
 
