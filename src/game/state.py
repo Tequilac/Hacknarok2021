@@ -15,6 +15,7 @@ class State:
         self.cities = cities
         self.migration_chance = self.INITIAL_MIGRATION_CHANCE
         self.previous_turn_data = {}
+        self.save_turn_data()
 
     def get_pops_num_by_state(self, pop_state: PopState) -> int:
         all_pops = reduce(lambda x, y: x + y, [city.pops for city in self.cities])

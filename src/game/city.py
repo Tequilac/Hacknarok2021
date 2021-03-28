@@ -17,6 +17,7 @@ class City:
         self.laws = laws if laws else []
         self.pops = pops if pops else []
         self.previous_turn_data = {}
+        self.save_turn_data()
 
     def get_pops_num_by_state(self, pop_state: PopState):
         return len([pop for pop in self.pops if pop.state == pop_state])

@@ -91,6 +91,17 @@ class Visualizer:
         dead_pops_text_surf = font.render("Num of dead pops: " + str(city.get_dead_pops_num()), True, Colors.BLACK.value)
         happiness_surf = font.render("Average happiness: " + str(city.get_average_pops_happiness()), True, Colors.BLACK.value)
 
+        past_text_surf = font.render("Last turn:", True, Colors.BLACK.value)
+        past_healthy_pops_text_surf = font.render("Num of healthy pops: " + str(city.previous_turn_data["healthy"]), True,
+                                             Colors.BLACK.value)
+        past_recovered_pops_text_surf = font.render("Num of recovered pops: " + str(city.previous_turn_data["recovered"]), True,
+                                               Colors.BLACK.value)
+        past_vaccinated_pops_text_surf = font.render("Num of vaccinated pops: " + str(city.previous_turn_data["vaccinated"]), True,
+                                                Colors.BLACK.value)
+        past_ill_pops_text_surf = font.render("Num of ill pops: " + str(city.previous_turn_data["ill"]), True, Colors.BLACK.value)
+        past_dead_pops_text_surf = font.render("Num of dead pops: " + str(city.previous_turn_data["dead"]), True,
+                                          Colors.BLACK.value)
+
         display_surf.blit(name_text_surf, self.city_info_position)
         display_surf.blit(healthy_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 20))
         display_surf.blit(recovered_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 40))
@@ -98,6 +109,12 @@ class Visualizer:
         display_surf.blit(ill_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 80))
         display_surf.blit(dead_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 100))
         display_surf.blit(happiness_surf, (self.city_info_position[0], self.city_info_position[1] + 120))
+        display_surf.blit(past_text_surf, (self.city_info_position[0], self.city_info_position[1] + 140))
+        display_surf.blit(past_healthy_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 160))
+        display_surf.blit(past_recovered_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 180))
+        display_surf.blit(past_vaccinated_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 200))
+        display_surf.blit(past_ill_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 220))
+        display_surf.blit(past_dead_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 240))
 
     def display_law_info(self, law: Law, active: bool, display_surf):
         font = self.LAW_INFO_FONT
