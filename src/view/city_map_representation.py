@@ -13,10 +13,11 @@ class CityMapRepresentation(Button):
     TEXT_VERTICAL_TRANSPOSITION = 77
     TEXT_HORIZONTAL_TRANSPOSITION = 15
 
-    def __init__(self, image_file, name, location):
+    def __init__(self, image_file, name, location, button_type):
         super().__init__(name, pygame.transform.scale(pygame.image.load(image_file),
                         (self.CITY_SIZE['width'], self.CITY_SIZE['height'])), location)
         self.font = self.CITY_FONT
+        self.button_type = button_type
         self.textSurf = self.font.render(self.name, True, Colors.BLACK.value)
 
     def render(self, display_surf):
