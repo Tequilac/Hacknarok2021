@@ -10,9 +10,8 @@ class City:
     QUARANTINE_CHANCE = 20
     RECOVERED_CHANCE = 30
     
-    def __init__(self, name: str, pops_num: int, location: Tuple[int], laws=None, pops=None):
+    def __init__(self, name: str, location: Tuple[int], laws=None, pops=None):
         self.name = name
-        self.pops_num = pops_num
         self.location = location
         self.laws = laws if laws else []
         self.pops = pops if pops else []

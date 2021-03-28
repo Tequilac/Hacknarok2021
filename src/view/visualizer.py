@@ -53,8 +53,6 @@ class Visualizer:
             self.buttons.append(city_options_button)
             counter = counter + 1
 
-
-
     def initialize_state_options_buttons(self, state_laws, display_surf):
         counter = 0
         for law in state_laws:
@@ -75,7 +73,9 @@ class Visualizer:
 
     def initialize_next_turn_button(self, image_file, display_surf):
         image = pygame.transform.scale(pygame.image.load(image_file), (100, 100))
-        display_surf.blit(image, (1563, 826))
+        button = Button('NEXT_TURN', image, (1563, 826))
+        button.render(display_surf)
+        self.buttons.append(button)
 
     def display_city_info(self, city, display_surf):
         self.current_selected_city = city
@@ -163,3 +163,8 @@ class Visualizer:
 
         display_surf.blit(next_elections_text, (1650, 940))
         display_surf.blit(last_elections_result_text, (1650, 960))
+
+    def clear_elections_statistics(self, display_surf):
+        surface = pygame.Surface((300, 150))
+        surface.fill(Colors.WHITE.value)
+        display_surf.blit(surface, (1650, 940))
