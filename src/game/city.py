@@ -36,8 +36,58 @@ class City:
     def get_recovered_pops_num(self) -> int:
         return self.get_pops_num_by_state(PopState.recovered)
 
+    def get_young_pops_num_by_state(self, pop_state: PopState):
+        return len([pop for pop in self.pops if pop.state == pop_state and pop.age < 50])
+
+    def get_old_pops_num_by_state(self, pop_state: PopState):
+        return len([pop for pop in self.pops if pop.state == pop_state and pop.age > 49])
+
+    def get_young_healthy_pops_num(self) -> int:
+        return self.get_young_pops_num_by_state(PopState.healthy)
+
+    def get_young_dead_pops_num(self) -> int:
+        return self.get_young_pops_num_by_state(PopState.dead)
+
+    def get_young_ill_pops_num(self) -> int:
+        return self.get_young_pops_num_by_state(PopState.ill)
+
+    def get_young_vaccinated_pops_num(self) -> int:
+        return self.get_young_pops_num_by_state(PopState.vaccinated)
+
+    def get_young_recovered_pops_num(self) -> int:
+        return self.get_young_pops_num_by_state(PopState.recovered)
+
+    def get_old_healthy_pops_num(self) -> int:
+        return self.get_young_pops_num_by_state(PopState.healthy)
+
+    def get_old_dead_pops_num(self) -> int:
+        return self.get_old_pops_num_by_state(PopState.dead)
+
+    def get_old_ill_pops_num(self) -> int:
+        return self.get_old_pops_num_by_state(PopState.ill)
+
+    def get_old_vaccinated_pops_num(self) -> int:
+        return self.get_old_pops_num_by_state(PopState.vaccinated)
+
+    def get_old_recovered_pops_num(self) -> int:
+        return self.get_old_pops_num_by_state(PopState.recovered)
+
     def get_average_pops_happiness(self) -> int:
-        return sum(map(lambda pop: pop.happiness, self.pops))/len(self.pops)
+        return sum(map(lambda pop: pop.happiness, self.pops)) / len(self.pops)
+
+    def get_average_young_pops_happiness(self) -> int:
+        pops = [pop for pop in self.pops if pop.age < 50]
+        return sum(map(lambda pop: pop.happiness, pops)) / len(pops)
+
+    def get_average_old_pops_happiness(self) -> int:
+        pops = [pop for pop in self.pops if pop.age > 49]
+        return sum(map(lambda pop: pop.happiness, pops)) / len(pops)
+
+    def get_pops_wearing_masks_num(self) -> int:
+        return len([pop for pop in self.pops if pop.mask_on])
+
+    def get_quarantined_pops_num(self) -> int:
+        return len([pop for pop in self.pops if pop.quarantined])
 
     def save_turn_data(self):
         self.previous_turn_data['healthy'] = self.get_healthy_pops_num()
