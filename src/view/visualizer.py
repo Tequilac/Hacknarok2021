@@ -6,9 +6,8 @@ from game import Law
 from settings import Colors
 
 
-
 class Visualizer:
-    BUTTON_SPACE_DISTANCE= {
+    BUTTON_SPACE_DISTANCE = {
         'horizontal': 20,
         'vertical': 20,
     }
@@ -55,8 +54,6 @@ class Visualizer:
             self.buttons.append(city_options_button)
             counter = counter + 1
 
-
-
     def initialize_state_options_buttons(self, state_laws, display_surf):
         counter = 0
         for law in state_laws:
@@ -75,10 +72,11 @@ class Visualizer:
             self.buttons.append(city_options_button)
             counter = counter + 1
 
-    def initialize_next_turn_button(selfself, image_file, display_surf):
+    def initialize_next_turn_button(self, image_file, display_surf):
         image = pygame.transform.scale(pygame.image.load(image_file), (100, 100))
-        display_surf.blit(image, (1563, 826))
-
+        button = Button('NEXT_TURN', image, (1563, 826))
+        button.render(display_surf)
+        self.buttons.append(button)
 
     def display_city_info(self, city, display_surf):
         self.current_selected_city = city
@@ -133,7 +131,7 @@ class Visualizer:
 
         self.clear_law_info_field(display_surf)
         for button in self.buttons:
-            if button.button_type == 'ENACT_REVOKE_TYPE':
+            if hasattr(button, 'button_type') and button.button_type == 'ENACT_REVOKE_TYPE':
                 self.buttons.remove(button)
 
         for i in range(len(surfs)):
@@ -180,7 +178,20 @@ class Visualizer:
                             button.surface.fill(settings.Colors.RED.value)
                     button.render(display_surf)
 
+    def display_elections_statistics(self, display_surf, game):
+        font = self.CITY_INFO_FONT
+        time_to_next_elections = game.ELECTIONS_FREQUENCY - (game.turn % game.ELECTIONS_FREQUENCY)
+        next_elections_text = font.render("Time to next elections: " + str(time_to_next_elections) + " weeks",
+                                          True,
+                                          Colors.BLACK.value)
+        last_elections_result_text = font.render("Last elections results: " + str(game.elections.last_elections_result),
+                                          True,
+                                          Colors.BLACK.value)
 
+        display_surf.blit(next_elections_text, (1650, 940))
+        display_surf.blit(last_elections_result_text, (1650, 960))
 
-
-
+    def clear_elections_statistics(self, display_surf):
+        surface = pygame.Surface((300, 150))
+        surface.fill(Colors.WHITE.value)
+        display_surf.blit(surface, (1650, 940))

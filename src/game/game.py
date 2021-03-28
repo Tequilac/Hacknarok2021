@@ -3,15 +3,19 @@ import settings
 import parsers
 from .law import *
 from .state import *
+from .elections import *
 
 
 class Game:
+    ELECTIONS_FREQUENCY = 3
+
     def __init__(self, turn: int, cities: List[City]):
         self.turn = turn
         laws = self.create_laws()
         self.state_laws = laws[0]
         self.city_laws = laws[1]
         self.state = State(self.state_laws, 0, cities)
+        self.elections = Elections(self.state)
 
     def next_turn(self) -> None:
         self.state.save_turn_data()
@@ -19,6 +23,10 @@ class Game:
             city.save_turn_data()
             city.compute_pops_changes(self.state.laws, self.turn)
         self.state.compute_migrations()
+
+        if self.turn % self.ELECTIONS_FREQUENCY == 0:
+            self.elections.hold()
+
         self.turn += 1
 
     def create_laws(self) -> List[List[Law]]:

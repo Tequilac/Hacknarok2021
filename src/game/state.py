@@ -17,6 +17,9 @@ class State:
         self.previous_turn_data = {}
         self.save_turn_data()
 
+    def get_alive_pops_num(self) -> int:
+        return sum([len(city.pops) for city in self.cities])
+
     def get_pops_num_by_state(self, pop_state: PopState) -> int:
         all_pops = reduce(lambda x, y: x + y, [city.pops for city in self.cities])
         return len([pop for pop in all_pops if pop.state == pop_state])
