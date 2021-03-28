@@ -3,6 +3,7 @@ from .background import *
 from .city_map_representation import *
 from .city_options_button import *
 from game import Law
+#from game import
 from settings import Colors
 
 
@@ -16,14 +17,15 @@ class Visualizer:
     LAW_INFO_FONT_SIZE = 16
     LAW_INFO_FONT = pygame.font.SysFont("calibri", CITY_INFO_FONT_SIZE)
 
-    def __init__(self):
-        self.first_city_options_button_position = (1006, 272)
+    def __init__(self, game):
+        self.first_city_options_button_position = (1006, 362)
         self.first_state_options_button_position = (1455, 20)
         self.city_info_position = (1030, 35)
-        self.law_info_position = (1009, 657)
+        self.law_info_position = (1009, 757)
         self.buttons = []
         self.current_selected_city = None
         self.current_selected_law = None
+        self.game = game
 
     def initialize_background(self, file_name, display_surf):
         back_ground = Background(file_name, (0, 0))
@@ -168,7 +170,7 @@ class Visualizer:
         display_surf.blit(surface, button_rect)
 
     def clear_city_info_field(self, display_surf):
-        surface = pygame.Surface((250, 150))
+        surface = pygame.Surface((400, 300))
         surface.fill(Colors.WHITE.value)
         display_surf.blit(surface, self.city_info_position)
 
@@ -187,6 +189,16 @@ class Visualizer:
                         else:
                             button.surface.fill(settings.Colors.RED.value)
                     button.render(display_surf)
+
+    def update_state_buttons(self, display_surf, game):
+        for law in game.state_laws:
+            for button in self.buttons:
+                if button.name == law.name:
+                    if law in self.game.state.laws:
+                        button.surface.fill(settings.Colors.GREEN.value)
+                    else:
+                        button.surface.fill(settings.Colors.RED.value)
+                button.render(display_surf)
 
     def display_elections_statistics(self, display_surf, game):
         font = self.CITY_INFO_FONT

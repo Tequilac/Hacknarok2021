@@ -64,7 +64,10 @@ class State:
     def revoke_law(self, law: Law) -> None:
         if law.name == 'No migration' or law.name == 'Limited migration':
             self.migration_chance = self.INITIAL_MIGRATION_CHANCE
-        self.laws.remove(law)
+        if law in self.laws:
+            self.laws.remove(law)
+        else:
+            return
         for city in self.cities:
             for pop in city.pops:
                 for modifier in law.happiness_modifiers:
