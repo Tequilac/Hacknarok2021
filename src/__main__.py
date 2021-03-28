@@ -32,6 +32,7 @@ class App:
         self.visualizer.initialize_cities_on_map(cities_list, settings.Paths.RESOURCES / 'city.png', self._display_surf)
         self.visualizer.initialize_city_options_buttons(self.game.city_laws, self._display_surf)
         self.visualizer.initialize_state_options_buttons(self.game.state_laws, self._display_surf)
+        self.visualizer.initialize_next_turn_button(settings.Paths.RESOURCES / 'next_turn.jpg', self._display_surf)
 
         pygame.display.flip()
         pygame.display.update()
@@ -67,8 +68,8 @@ class App:
                                     button.render(self._display_surf)
 
     def on_loop(self):
-        #print(pygame.mouse.get_pos())
-        pass
+        print(pygame.mouse.get_pos())
+        #pass
 
     def on_render(self):
         pygame.display.flip()

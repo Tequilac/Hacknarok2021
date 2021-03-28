@@ -67,6 +67,11 @@ class Visualizer:
             self.buttons.append(city_options_button)
             counter = counter + 1
 
+    def initialize_next_turn_button(selfself, image_file, display_surf):
+        image = pygame.transform.scale(pygame.image.load(image_file), (90, 90))
+        display_surf.blit(image, (1563, 826))
+
+
     def display_city_info(self, city, display_surf):
         self.current_selected_city = city
         font = self.CITY_INFO_FONT
