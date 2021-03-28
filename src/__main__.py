@@ -59,16 +59,26 @@ class App:
                             for law in self.game.city_laws:
                                 if law.name == button.name:
                                     if law in current_selected_city.laws:
+                                        self.visualizer.display_law_info(law, False, self._display_surf)
                                         current_selected_city.revoke_law(law)
                                         button.surface.fill(settings.Colors.RED.value)
                                     else:
+                                        self.visualizer.display_law_info(law, True, self._display_surf)
                                         current_selected_city.introduce_law(law)
                                         button.surface.fill(settings.Colors.GREEN.value)
                                     button.render(self._display_surf)
+                    elif button.button_type == 'STATE_BUTTON':
+                        for law in self.game.state_laws:
+                            if law.name == button.name:
+                                if law in self.game.state.laws:
+                                    button.surface.fill(settings.Colors.RED.value)
+                                else:
+                                    button.surface.fill(settings.Colors.GREEN.value)
+                                button.render(self._display_surf)
 
     def on_loop(self):
         print(pygame.mouse.get_pos())
-        #pass
+        #pass1009 657
 
     def on_render(self):
         pygame.display.flip()

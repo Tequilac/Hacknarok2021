@@ -1,6 +1,8 @@
+from .enact_revoke_law_button import *
 from .background import *
 from .city_map_representation import *
 from .city_options_button import *
+from game import Law
 from settings import Colors
 
 
@@ -12,11 +14,14 @@ class Visualizer:
     }
     CITY_INFO_FONT_SIZE = 18
     CITY_INFO_FONT = pygame.font.SysFont("calibri", CITY_INFO_FONT_SIZE)
+    LAW_INFO_FONT_SIZE = 16
+    LAW_INFO_FONT = pygame.font.SysFont("calibri", CITY_INFO_FONT_SIZE)
 
     def __init__(self):
         self.first_city_options_button_position = (1006, 272)
         self.first_state_options_button_position = (1455, 20)
         self.city_info_position = (1030, 35)
+        self.law_info_position = (1009, 657)
         self.buttons = []
         self.current_selected_city = None
 
@@ -49,6 +54,8 @@ class Visualizer:
             self.buttons.append(city_options_button)
             counter = counter + 1
 
+
+
     def initialize_state_options_buttons(self, state_laws, display_surf):
         counter = 0
         for law in state_laws:
@@ -68,7 +75,7 @@ class Visualizer:
             counter = counter + 1
 
     def initialize_next_turn_button(selfself, image_file, display_surf):
-        image = pygame.transform.scale(pygame.image.load(image_file), (90, 90))
+        image = pygame.transform.scale(pygame.image.load(image_file), (100, 100))
         display_surf.blit(image, (1563, 826))
 
 
@@ -91,10 +98,51 @@ class Visualizer:
         display_surf.blit(dead_pops_text_surf, (self.city_info_position[0], self.city_info_position[1] + 100))
         display_surf.blit(happiness_surf, (self.city_info_position[0], self.city_info_position[1] + 120))
 
+    def display_law_info(self, law: Law, active: bool, display_surf):
+        font = self.LAW_INFO_FONT
+        name_text_surf = font.render(str(law.name), True, Colors.BLACK.value)
+        surfs = [name_text_surf]
+        for modifier in law.infection_chance_modifiers:
+            surfs.append(font.render("Decreases chance of infection for " + list(modifier.keys())[0] + " pops", True,
+                                     Colors.BLACK.value))
+        for modifier in law.happiness_modifiers:
+            if modifier[list(modifier.keys())[0]] < 0:
+                word = "Decreases"
+            else:
+                word = "Increases"
+            surfs.append(font.render(word + " happiness for " + list(modifier.keys())[0] + " pops", True,
+                                     Colors.BLACK.value))
+
+        for i in range(len(surfs)):
+            self.clear_law_info_field(display_surf)
+            display_surf.blit(surfs[i], (self.law_info_position[0], self.law_info_position[1] + 20*i))
+            if i == len(surfs) - 1:
+                if active:
+                    enact_law_button = EnactRevokeLawButton('Enact law', Colors.WHITE.value, Colors.LIGHTGREEN.value,
+                                                            'Enact law',(self.law_info_position[0],self.law_info_position[1] + 20*len(surfs)),
+                                                            'ENACT_REVOKE_TYPE')
+                    enact_law_button.render(display_surf)
+                    self.buttons.append(enact_law_button)
+                else:
+                    revoke_law_button = EnactRevokeLawButton('Revoke law', Colors.WHITE.value, Colors.LIGHT_RED.value,
+                                                             'Revoke law',
+                                                             (self.law_info_position[0], self.law_info_position[1] + 20*len(surfs)),
+                                                             'ENACT_REVOKE_TYPE')
+
+                    revoke_law_button.render(display_surf)
+                    self.buttons.append(revoke_law_button)
+
+
+
     def clear_city_info_field(self, display_surf):
         surface = pygame.Surface((250, 150))
         surface.fill(Colors.WHITE.value)
         display_surf.blit(surface, self.city_info_position)
+
+    def clear_law_info_field(self, display_surf):
+        surface = pygame.Surface((300, 350))
+        surface.fill(Colors.WHITE.value)
+        display_surf.blit(surface, self.law_info_position)
 
     def update_city_buttons(self, display_surf, game):
         if self.current_selected_city is not None:
