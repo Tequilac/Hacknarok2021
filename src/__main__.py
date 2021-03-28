@@ -78,7 +78,7 @@ class App:
 
     def on_loop(self):
         print(pygame.mouse.get_pos())
-        #pass1009 657
+        self.visualizer.display_elections_statistics(self._display_surf, self.game)
 
     def on_render(self):
         pygame.display.flip()

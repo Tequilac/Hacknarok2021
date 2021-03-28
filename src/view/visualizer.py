@@ -6,9 +6,8 @@ from game import Law
 from settings import Colors
 
 
-
 class Visualizer:
-    BUTTON_SPACE_DISTANCE= {
+    BUTTON_SPACE_DISTANCE = {
         'horizontal': 20,
         'vertical': 20,
     }
@@ -74,10 +73,9 @@ class Visualizer:
             self.buttons.append(city_options_button)
             counter = counter + 1
 
-    def initialize_next_turn_button(selfself, image_file, display_surf):
+    def initialize_next_turn_button(self, image_file, display_surf):
         image = pygame.transform.scale(pygame.image.load(image_file), (100, 100))
         display_surf.blit(image, (1563, 826))
-
 
     def display_city_info(self, city, display_surf):
         self.current_selected_city = city
@@ -132,8 +130,6 @@ class Visualizer:
                     revoke_law_button.render(display_surf)
                     self.buttons.append(revoke_law_button)
 
-
-
     def clear_city_info_field(self, display_surf):
         surface = pygame.Surface((250, 150))
         surface.fill(Colors.WHITE.value)
@@ -155,7 +151,15 @@ class Visualizer:
                             button.surface.fill(settings.Colors.RED.value)
                     button.render(display_surf)
 
+    def display_elections_statistics(self, display_surf, game):
+        font = self.CITY_INFO_FONT
+        time_to_next_elections = game.ELECTIONS_FREQUENCY - (game.turn % game.ELECTIONS_FREQUENCY)
+        next_elections_text = font.render("Time to next elections: " + str(time_to_next_elections) + " weeks",
+                                          True,
+                                          Colors.BLACK.value)
+        last_elections_result_text = font.render("Last elections results: " + str(game.elections.last_elections_result),
+                                          True,
+                                          Colors.BLACK.value)
 
-
-
-
+        display_surf.blit(next_elections_text, (1650, 940))
+        display_surf.blit(last_elections_result_text, (1650, 960))
