@@ -76,7 +76,7 @@ class Visualizer:
 
     def initialize_next_turn_button(self, image_file, display_surf):
         image = pygame.transform.scale(pygame.image.load(image_file), (100, 100))
-        button = Button('NEXT_TURN', image, (1563, 826))
+        button = Button('NEXT_TURN', image, (1663, 826))
         button.render(display_surf)
         self.buttons.append(button)
 
