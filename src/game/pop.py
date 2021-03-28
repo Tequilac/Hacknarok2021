@@ -16,10 +16,10 @@ class Pop:
         elif 'wearing_mask' in modifier and self.mask_on:
             self.happiness = self.happiness + modifier['wearing_mask']
         elif 'not_wearing_mask' in modifier and not self.mask_on:
-            self.happiness = self.happiness - modifier['not_wearing_mask']
-        elif 'young' in modifier and self.age < 40:
+            self.happiness = self.happiness + modifier['not_wearing_mask']
+        elif 'young' in modifier and self.age < 50:
             self.happiness = self.happiness + modifier['young']
-        elif 'old' in modifier and self.age > 50:
+        elif 'old' in modifier and self.age > 49:
             self.happiness = self.happiness + modifier['old']
 
     def remove_modifier(self, modifier):
@@ -29,7 +29,7 @@ class Pop:
             self.happiness = self.happiness - modifier['wearing_mask']
         elif 'not_wearing_mask' in modifier and not self.mask_on:
             self.happiness = self.happiness - modifier['not_wearing_mask']
-        elif 'young' in modifier and self.age < 40:
+        elif 'young' in modifier and self.age < 50:
             self.happiness = self.happiness - modifier['young']
-        elif 'old' in modifier and self.age > 50:
+        elif 'old' in modifier and self.age > 49:
             self.happiness = self.happiness - modifier['old']
