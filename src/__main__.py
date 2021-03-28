@@ -3,6 +3,7 @@ import menu
 import settings
 import game_over
 import game
+from settings import Paths
 from view.visualizer import Visualizer
 
 
@@ -19,6 +20,12 @@ class App:
 
     def on_init_pygame(self):
         pygame.init()
+        music_file = Paths.RESOURCES / 'main_theme.wav'
+        pygame.mixer.init()
+        pygame.mixer.music.load(music_file)
+        pygame.mixer.music.set_volume(0.5)
+        pygame.mixer.music.play()
+        pygame.event.wait()
         self._display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
 
     def game_init(self):
