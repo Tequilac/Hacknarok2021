@@ -115,9 +115,9 @@ class City:
                     infection_chance = infection_chance + modifier['wearing_mask']
                 elif 'not_wearing_mask' in modifier and not pop.mask_on:
                     infection_chance = infection_chance + modifier['not_wearing_mask']
-                elif 'young' in modifier and pop.age < 40:
+                elif 'young' in modifier and pop.age < 50:
                     infection_chance = infection_chance + modifier['young']
-                elif 'old' in modifier and pop.age > 50:
+                elif 'old' in modifier and pop.age > 49:
                     infection_chance = infection_chance + modifier['old']
 
         return infection_chance
